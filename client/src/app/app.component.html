@@ -1,0 +1,4 @@
+<input #newmsg >
+<button (click)="sendMessage(newmsg.value); newmsg.value='' ">Send Message</button>
+<button (click)="getChat(0)">Chat</button>
+<p>{{chat_message}}</p>
