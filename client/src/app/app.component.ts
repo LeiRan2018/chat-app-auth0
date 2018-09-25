@@ -12,12 +12,17 @@ export class AppComponent implements OnInit{
   
   message: string;
   chat_message: Chat;
+  chats: Array<string>;
+
   
-  constructor(private chat: ChatService){ }
+  constructor(private chat: ChatService){
+    this.chats = new Array<string>();
+   }
 
   ngOnInit() {
     this.chat.messages.subscribe(msg => {
       console.log(msg);
+      this.chats.push(msg);
     })
   }
 

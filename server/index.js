@@ -6,8 +6,11 @@ var io = require('socket.io')(http);
 var cors = require('cors');
 var methodOverride = require('method-override');
 var api = require('./routes/api.route');
+var bodyParser = require('body-parser');
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use('/api', api);
@@ -17,6 +20,10 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('disconnected');
     });
+
+    socket.on('chat message', function(msg){
+        io.emit('chat message', msg);
+      });
     
     socket.on('message', function (msg) {
         fs.appendFile('data.txt', msg + '\n' , (err) => {

@@ -1,4 +1,5 @@
 <input #newmsg >
+<li *ngFor='let chat of chats'>{{chat}}</li>
 <button (click)="sendMessage(newmsg.value); newmsg.value='' ">Send Message</button>
 <button (click)="getChat(0)">Chat</button>
-<p>{{chat_message.content[0].userid}}</p>
+<!-- <p>{{chat_message.content[0].userid}}</p> -->
