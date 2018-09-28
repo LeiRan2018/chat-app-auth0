@@ -12,7 +12,7 @@ export class WebsocketService {
 
   constructor() { }
 
-   connect(): Rx.Subject<MessageEvent> {
+  connect(): Rx.Subject<MessageEvent> {
 
     this.socket = io(`http://localhost:3000`);
 
