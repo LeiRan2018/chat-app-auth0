@@ -49,12 +49,12 @@ io.on('connection', function (socket) {
     });
 
     socket.on('message', function (msg) {
-        fs.appendFile('data.txt', msg + '\n', (err) => {
-            if (err) throw err;
-            console.log(msg + 'was appended to data.txt')
-        })
+        // fs.appendFile('data.txt', msg + '\n', (err) => {
+        //     if (err) throw err;
+        //     console.log(msg + 'was appended to data.txt')
+        // })
         console.log('message: ' + msg);
-        io.emit('message', msg);
+        io.emit('message', userid + ': '+ msg) ;
     });
 });
 
