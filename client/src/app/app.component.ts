@@ -7,31 +7,45 @@ import { Chat } from './models/chat.model';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'client';
-  
+
   message: string;
   chat_message: Chat;
   chats: Array<string>;
+  userid: string;
 
-  
-  constructor(private chat: ChatService){
+
+  constructor(private chat: ChatService) {
     this.chats = new Array<string>();
-   }
+  }
 
   ngOnInit() {
-    this.chat.messages.subscribe(msg => {
-      console.log(msg);
-      this.chats.push(msg);
-    })
+    // this.getChat();
+    this.getuserid();
+    this.senduserid('');
   }
 
   sendMessage(meg: string) {
     this.chat.sendMsg(meg);
   }
 
-  getChat(id: string) {
-    this.chat.getChat(id)
-      .subscribe(data => this.chat_message = data);
+  senduserid(meg: string) {
+    this.chat.sendMsg(meg);
   }
+
+  getChat() {
+    this.chat.messages.subscribe(msg => {
+
+      console.log(msg);
+      this.chats.push(msg);
+    });
+  }
+  getuserid() {
+    this.chat.messages.subscribe(msg => {
+      console.log('userid');
+      this.userid = msg['userid'];
+    })
+  }
+
 }

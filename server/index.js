@@ -54,7 +54,12 @@ io.on('connection', function (socket) {
         //     console.log(msg + 'was appended to data.txt')
         // })
         console.log('message: ' + msg);
-        io.emit('message', userid + ': '+ msg) ;
+        var data = {
+            "userid": userid,
+            "msg": msg
+        }
+
+        io.emit('message', data) ;
     });
 });
 

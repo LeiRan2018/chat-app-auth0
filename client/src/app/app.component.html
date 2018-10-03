@@ -1,5 +1,11 @@
-<input #newmsg >
-<li *ngFor='let chat of chats'>{{chat}}</li>
-<button (click)="sendMessage(newmsg.value); newmsg.value='' ">Send Message</button>
-<button (click)="getChat(0)">Chat</button>
+<input #newmsg>
+<li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat}}</li>
+<button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='' ">Send Message</button>
+<!-- <button type="button" class="btn btn-secondary" (click)="getChat()">Chat</button> -->
+<button type="button" class="btn btn-secondary" (click)="senduserid('')">userid</button>
 <!-- <p>{{chat_message.content[0].userid}}</p> -->
+<p>{{userid}}</p>
+<button>
+    <a routerLink="/login">login</a>
+</button>
+<router-outlet></router-outlet>

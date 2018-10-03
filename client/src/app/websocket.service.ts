@@ -30,6 +30,7 @@ export class WebsocketService {
       next: (data: Object) => {
         this.socket.emit('message', JSON.stringify(data));
       },
+      
     };
 
     // we return our Rx.Subject which is a combination

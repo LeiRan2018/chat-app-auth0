@@ -27,7 +27,7 @@ export class ChatService {
   // messages back to our socket.io server
   sendMsg(msg) {
     this.messages.next(msg);
-  }
+  };
 
   getChat(id: string): Observable<Chat> {
     return this.http.get(`${this.api}/${id}`).pipe(

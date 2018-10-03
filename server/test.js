@@ -6,4 +6,7 @@
 
 // console.log(typeof(student));
 
-fs.readFile
+// fs.readFile
+var shortid = require('shortid');
+var userid = shortid.generate();
+console.log(typeof(userid));
