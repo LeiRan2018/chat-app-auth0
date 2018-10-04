@@ -13,9 +13,9 @@ exports.getchat = async function(req, res) {
 };
 exports.postchat = async function(req, res) {
   try {
-    var id = req.params.id;
+    // var id = req.params.id;
     var data = req.body.data;
-    var query = await chatService.postchat(id, data);
+    var query = await chatService.postchat(data);
     return res
       .status(200)
       .json({ status: 200, data: query, message: "successfully" });

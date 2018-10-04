@@ -21,9 +21,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.getChat();
-    this.getuserid();
-    this.senduserid('');
+    this.getChat();
+    // this.getuserid();
+    // this.senduserid('');
   }
 
   sendMessage(meg: string) {
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     this.chat.messages.subscribe(msg => {
 
       console.log(msg);
-      this.chats.push(msg);
+      this.chats.push(JSON.stringify(msg));
     });
   }
   getuserid() {

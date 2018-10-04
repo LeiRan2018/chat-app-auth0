@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 import { Chat } from './models/chat.model';
+import { Login } from './models/login.model';
 
 @Injectable()
 export class ChatService {
@@ -32,7 +33,12 @@ export class ChatService {
   getChat(id: string): Observable<Chat> {
     return this.http.get(`${this.api}/${id}`).pipe(
       map(res => {return res['data'] as Chat})
-    )
+    );
   }
 
+  postuser(user: Login){
+    return this.http.post(`${this.api}/post`, {'data': user}).pipe(
+      map(res => {return res['data']})
+    );
+  }
 }
