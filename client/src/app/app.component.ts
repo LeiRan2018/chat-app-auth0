@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   chat_message: Chat;
   chats: Array<string>;
   userid: string;
-
+  
 
   constructor(private chat: ChatService) {
     this.chats = new Array<string>();
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   sendMessage(meg: string) {
     this.chat.sendMsg(meg);
   }
-
+  
   senduserid(meg: string) {
     this.chat.sendMsg(meg);
   }
