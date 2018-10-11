@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from './chat.service';
 import { Chat } from './models/chat.model';
+import { Chats } from './models/chats.model';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +13,12 @@ export class AppComponent implements OnInit {
 
   message: string;
   chat_message: Chat;
-  chats: Array<string>;
+  chats: Array<Chats>;
   userid: string;
   
 
   constructor(private chat: ChatService) {
-    this.chats = new Array<string>();
+    this.chats = new Array<Chats>();
   }
 
   ngOnInit() {
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit {
     this.chat.messages.subscribe(msg => {
 
       console.log(msg);
-      this.chats.push(JSON.stringify(msg));
+      this.chats.push(msg);
     });
   }
   getuserid() {

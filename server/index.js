@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
         io.emit('chat message', msg);
     });
 
-    socket.on('message', function (msg) {
+    socket.on('message', (msg) => {
         // fs.appendFile('data.txt', msg + '\n', (err) => {
         //     if (err) throw err;
         //     console.log(msg + 'was appended to data.txt')
