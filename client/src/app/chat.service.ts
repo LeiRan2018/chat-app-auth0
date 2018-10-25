@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 
 import { Chat } from './models/chat.model';
 import { Login } from './models/login.model';
+import { Sign } from './models/sign.model';
 
 @Injectable()
 export class ChatService {
@@ -36,8 +37,14 @@ export class ChatService {
     );
   }
 
-  postuser(user: Login){
+  postuser(user: any){
     return this.http.post(`${this.api}/post`, {'data': user}).pipe(
+      map(res => {return res['data']})
+    );
+  }
+
+  postusername(username: any) {
+    return this.http.post(`${this.api}/post`, {'data': username}).pipe(
       map(res => {return res['data']})
     );
   }

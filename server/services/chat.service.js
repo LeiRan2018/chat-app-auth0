@@ -10,45 +10,38 @@ exports.getchat = async function (id) {
         var data = JSON.parse(chat);
         var query;
         data.forEach(element => {
-            if(element.userid == id){
+            if (element.userid == id) {
                 query = element
             }
         });
-        if(query != undefined) {
+        if (query != undefined) {
             return query;
-        }else {
+        } else {
             return false;
         }
-    }catch(e) {
+    } catch (e) {
         throw Error('error occured while finding userid');
     }
 };
 exports.postchat = async function (data) {
     try {
 
-        var chat = fs.readFileSync('./data1.txt').toString();
+        var chat = fs.readFileSync('data/user.txt').toString();
         var old_data = JSON.parse(chat);
-      
-        old_data.push(data);
-        // old_data.push(new_json);
-        fs.truncateSync('./data1.txt');
-        fs.writeFileSync('./data1.txt', JSON.stringify(old_data) );
-        return 'successed';
-        // var query;
-        // var new_chat = fs.readFileSync('./data1.txt').toString();
-        // var new_data = JSON.parse(new_chat);
-        // // return new_data;
-        // new_data.forEach(element => {
-        //     if(element.userid == id){
-        //         query = element
-        //     }
-        // });
-        // if(query != undefined) {
-        //     return query;
-        // }else {
-        //     return false;
-        // }
-    }catch(e) {
+        var found = old_data.find(el => {
+            return el.username == data.username;
+        })
+        if (found == undefined) {
+            old_data.push(data);
+            fs.truncateSync('data/user.txt');
+            fs.writeFileSync('data/user.txt', JSON.stringify(old_data));
+            return 'Sign up done';
+        }else {
+            return 'Account already existed';
+        }
+
+
+    } catch (e) {
         throw Error('error occured while posting new data');
     }
 };

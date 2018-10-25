@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
-import { Login } from '../models/login.model';
 import { Location } from '@angular/common';
+import { Sign } from '../models/sign.model';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-sign',
+  templateUrl: './sign.component.html',
+  styleUrls: ['./sign.component.css']
 })
-export class LoginComponent implements OnInit {
+export class SignComponent implements OnInit {
   userid: string;
-  model = {
-    usernmae: ''
-  }
+  model: Sign;
   mess: string;
   constructor(
     private chat: ChatService,
@@ -23,6 +21,7 @@ export class LoginComponent implements OnInit {
   get diagnostic() { return JSON.stringify(this.model); }
 
   ngOnInit() {
+    this.model = new Sign('', '');
     // this.senduserid('');
     // this.getuserid();
   }
@@ -31,10 +30,21 @@ export class LoginComponent implements OnInit {
     this.chat.sendMsg(meg);
   }
 
-  sendusername() {
+  senduser() {
+
     this.chat.postuser(this.model)
       .subscribe(msg => { this.mess = msg });
+
     // this.location.back();
   }
 
+  // getuserid() {
+  //   this.chat.messages.subscribe(msg => {
+  //     console.log('userid');
+  //     this.userid = msg['userid'];
+  //     this.model = new Sign(this.userid, '', '');
+  //   })
+  // }
+
 }
+

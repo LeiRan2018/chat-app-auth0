@@ -17,36 +17,36 @@ export class AppComponent implements OnInit {
   userid: string;
   
 
-  constructor(private chat: ChatService) {
+  constructor() {
     this.chats = new Array<Chats>();
   }
 
   ngOnInit() {
-    this.getChat();
+    // this.getChat();
     // this.getuserid();
     // this.senduserid('');
   }
 
-  sendMessage(meg: string) {
-    this.chat.sendMsg(meg);
-  }
+  // sendMessage(meg: string) {
+  //   this.chat.sendMsg(meg);
+  // }
   
-  senduserid(meg: string) {
-    this.chat.sendMsg(meg);
-  }
+  // senduserid(meg: string) {
+  //   this.chat.sendMsg(meg);
+  // }
 
-  getChat() {
-    this.chat.messages.subscribe(msg => {
+  // getChat() {
+  //   this.chat.messages.subscribe(msg => {
 
-      console.log(msg);
-      this.chats.push(msg);
-    });
-  }
-  getuserid() {
-    this.chat.messages.subscribe(msg => {
-      console.log('userid');
-      this.userid = msg['userid'];
-    })
-  }
+  //     console.log(msg);
+  //     this.chats.push(msg);
+  //   });
+  // }
+  // getuserid() {
+  //   this.chat.messages.subscribe(msg => {
+  //     console.log('userid');
+  //     this.userid = msg['userid'];
+  //   })
+  // }
 
 }

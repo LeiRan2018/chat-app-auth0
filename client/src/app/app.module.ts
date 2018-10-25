@@ -8,13 +8,15 @@ import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule }   from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
+import { SignComponent } from './sign/sign.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    SignComponent
   ],
   imports: [
     BrowserModule,

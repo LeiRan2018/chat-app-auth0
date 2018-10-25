@@ -17,28 +17,8 @@ app.use(cors());
 app.use('/api', api);
 
 io.on('connection', function (socket) {
-    var userid = shortid.generate();
-    console.log('uesrid: ' + userid + ' conected');
-
-    var chat = fs.readFileSync('./data.txt').toString();
-    var old_data = JSON.parse(chat);
-    var new_json = {
-        "userid": userid,
-        "name": "San",
-        "content": [
-            {
-                "userid": "1",
-                "detail": "heel",
-                "created_at": "2018-09-10",
-                "modified_at": "2018-10-10"
-            }
-        ]
-
-    }
-    old_data.push(new_json);
-    fs.truncateSync('./data.txt');
-    fs.writeFileSync('./data.txt', JSON.stringify(old_data) );
-
+    // var userid = shortid.generate();
+    // console.log('uesrid: ' + userid + ' conected');
 
     socket.on('disconnect', function () {
         console.log('disconnected');
