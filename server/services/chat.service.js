@@ -36,8 +36,28 @@ exports.postchat = async function (data) {
             fs.truncateSync('data/user.txt');
             fs.writeFileSync('data/user.txt', JSON.stringify(old_data));
             return 'Sign up done';
-        }else {
+        } else {
             return 'Account already existed';
+        }
+
+
+    } catch (e) {
+        throw Error('error occured while posting new data');
+    }
+};
+
+exports.postuser = async function (data) {
+    try {
+
+        var chat = fs.readFileSync('data/user.txt').toString();
+        var old_data = JSON.parse(chat);
+        var found = old_data.find(el => {
+            return el.username == data.username;
+        })
+        if (found != undefined) {
+            return found;
+        } else {
+            return 'Your account not existed';
         }
 
 

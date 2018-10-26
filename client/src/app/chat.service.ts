@@ -44,8 +44,10 @@ export class ChatService {
   }
 
   postusername(username: any) {
-    return this.http.post(`${this.api}/post`, {'data': username}).pipe(
+    return this.http.post(`${this.api}/login`, {'data': username}).pipe(
       map(res => {return res['data']})
     );
   }
+
+
 }

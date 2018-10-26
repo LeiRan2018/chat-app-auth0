@@ -1,6 +1,10 @@
-<h1>Sign up</h1>
-<p>{{mess}}</p>
-<form #loginForm="ngForm">
+<h1>Log in</h1>
+<p>{{logged}}</p>
+<p>{{'username: '+ mess.username + ' userid: '+ mess.userid
+  +' address: '+ mess.address}}
+</p>
+
+<form *ngIf="logged" #loginForm="ngForm">
   {{diagnostic}}
   <div class="form-group">
     <label for="name">User name</label>

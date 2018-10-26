@@ -11,12 +11,15 @@ import { Location } from '@angular/common';
 export class LoginComponent implements OnInit {
   userid: string;
   model = {
-    usernmae: ''
+    username: ''
   }
-  mess: string;
+  mess: any;
+  logged: boolean = true;
+  test = 'hello';
   constructor(
     private chat: ChatService,
     private location: Location) {
+      this.logged = true;
   }
 
 
@@ -32,8 +35,9 @@ export class LoginComponent implements OnInit {
   }
 
   sendusername() {
-    this.chat.postuser(this.model)
+    this.chat.postusername(this.model)
       .subscribe(msg => { this.mess = msg });
+    this.logged = false;
     // this.location.back();
   }
 
