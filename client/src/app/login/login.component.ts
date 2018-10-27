@@ -1,14 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Login } from '../models/login.model';
 import { Location } from '@angular/common';
+
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent implements OnInit {
+   
   userid: string;
   model = {
     username: ''
@@ -18,8 +22,9 @@ export class LoginComponent implements OnInit {
   test = 'hello';
   constructor(
     private chat: ChatService,
-    private location: Location) {
-      this.logged = true;
+    private location: Location
+    ) {
+      
   }
 
 
@@ -29,7 +34,8 @@ export class LoginComponent implements OnInit {
     // this.senduserid('');
     // this.getuserid();
   }
-
+  
+ 
   senduserid(meg: string) {
     this.chat.sendMsg(meg);
   }
