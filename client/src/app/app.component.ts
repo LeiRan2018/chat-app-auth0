@@ -15,13 +15,16 @@ export class AppComponent implements OnInit {
   chat_message: Chat;
   chats: Array<Chats>;
   userid: string;
-  
+  // currentUser = localStorage.getItem('currentUser') ? localStorage.getItem('currentUser'): {};
+
 
   constructor() {
     this.chats = new Array<Chats>();
+    
   }
 
   ngOnInit() {
+
     // this.getChat();
     // this.getuserid();
     // this.senduserid('');
@@ -30,7 +33,7 @@ export class AppComponent implements OnInit {
   // sendMessage(meg: string) {
   //   this.chat.sendMsg(meg);
   // }
-  
+
   // senduserid(meg: string) {
   //   this.chat.sendMsg(meg);
   // }

@@ -9,17 +9,19 @@ import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule }   from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { SignComponent } from './sign/sign.component';
-import { NgbdModalContent } from './header/header.component';
+// import { NgbdModalContent } from './header/header.component';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { HomeComponent } from './home/home.component';
+import { AuthGuard } from './guards/auth.guard';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
     SignComponent,
-    NgbdModalContent
+    // NgbdModalContent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -29,10 +31,11 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     NgbModule
   ],
   entryComponents:[
-    NgbdModalContent,
+    LoginComponent
   ],
   providers: [
     ChatService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

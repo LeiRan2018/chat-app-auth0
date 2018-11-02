@@ -3,6 +3,7 @@
 var User = require('../models/user.model');
 var Chat = require('../models/chat.model');
 var fs = require('fs');
+var shortid = require('shortid');
 exports.getchat = async function (id) {
     try {
 
@@ -25,7 +26,8 @@ exports.getchat = async function (id) {
 };
 exports.postchat = async function (data) {
     try {
-
+        var userid = shortid.generate();   
+        data['userid'] = userid;
         var chat = fs.readFileSync('data/user.txt').toString();
         var old_data = JSON.parse(chat);
         var found = old_data.find(el => {
@@ -57,7 +59,7 @@ exports.postuser = async function (data) {
         if (found != undefined) {
             return found;
         } else {
-            return 'Your account not existed';
+            return ' not existed';
         }
 
 

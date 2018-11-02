@@ -1,19 +1,12 @@
-<h1>Log in</h1>
-<p>{{logged}}</p>
-<p>{{'username: '+ mess.username + ' userid: '+ mess.userid
-  +' address: '+ mess.address}}
-</p>
-
-<form *ngIf="logged" #loginForm="ngForm">
-  {{diagnostic}}
+<form #loginForm="ngForm">
+  <div *ngIf = "logged">
+     {{'Your account is ' + mess + ' and please Sign up'}}
+  </div>
+ 
   <div class="form-group">
     <label for="name">User name</label>
-    <input type="text" class="form-control" id="username"
-           required
-           [(ngModel)]="model.username" name="username">
+    <input type="text" class="form-control" id="username" required [(ngModel)]="model.username" name="username">
   </div>
-
-
-  <button type="submit" class="btn btn-success" (click)="sendusername()">Submit</button>
-
+  <button type="submit" class="btn btn-success" (click)="senduser()">Submit</button>
+  <a class="nav-link " routerLink="/sign">Sign up</a>
 </form>
