@@ -12,19 +12,19 @@ import { Sign } from './models/sign.model';
 export class ChatService {
   api = `http://localhost:3000/api/chat`;
   messages: Subject<any>;
-  
+
   // Our constructor calls our wsService connect method
   constructor(
     private wsService: WebsocketService,
     private http: HttpClient
-    ) {
+  ) {
     this.messages = <Subject<any>>wsService
       .connect()
       .map((response: any): any => {
         return response;
       })
-   }
-  
+  }
+
   // Our simplified interface for sending
   // messages back to our socket.io server
   sendMsg(msg) {
@@ -33,26 +33,27 @@ export class ChatService {
 
   getChat(id: string): Observable<Chat> {
     return this.http.get(`${this.api}/${id}`).pipe(
-      map(res => {return res['data'] as Chat})
+      map(res => { return res['data'] as Chat })
     );
   }
 
-  postuser(user: any){
-    return this.http.post(`${this.api}/post`, {'data': user}).pipe(
-      map(res => {return res['data']})
+  postuser(user: any) {
+    return this.http.post(`${this.api}/post`, { 'data': user }).pipe(
+      map(res => { return res['data'] })
     );
   }
 
   postusername(username: any) {
-    return this.http.post(`${this.api}/login`, {'data': username}).pipe(
+    return this.http.post(`${this.api}/login`, { 'data': username }).pipe(
       map(res => {
         localStorage.setItem('currentUser', JSON.stringify(res['data']));
-        return res['data']})
+        return res['data']
+      })
     );
   }
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
-}
+  }
 
 }

@@ -1,7 +1,8 @@
 <app-header></app-header>
-
+<p>{{currentUser.userid}}</p>
 <p>{{currentUser.username}}</p>
-<li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.userid + ' : '+ chat.msg}}</li>
+
+<li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.userid + ' : '+ chat.meg}}</li>
 <div class="fixed-bottom">
     <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
     <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='' ">Send

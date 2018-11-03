@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
     // this.senduserid('');
   }
 
-  // sendMessage(meg: string) {
+  //  sendMessage(meg: string) {
   //   this.chat.sendMsg(meg);
   // }
 

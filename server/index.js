@@ -24,22 +24,13 @@ io.on('connection', function (socket) {
         console.log('disconnected');
     });
 
-    socket.on('chat message', function (msg) {
-        io.emit('chat message', msg);
-    });
-
     socket.on('message', (msg) => {
         // fs.appendFile('data.txt', msg + '\n', (err) => {
         //     if (err) throw err;
         //     console.log(msg + 'was appended to data.txt')
         // })
-        console.log('message: ' + msg);
-        var data = {
-            "userid": userid,
-            "msg": msg
-        }
-
-        io.emit('message', data) ;
+        console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);
+        io.emit('message', msg);
     });
 });
 
