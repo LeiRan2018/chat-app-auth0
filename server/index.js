@@ -9,6 +9,7 @@ var api = require('./routes/api.route');
 var bodyParser = require('body-parser');
 var shortid = require('shortid');
 
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,13 +26,28 @@ io.on('connection', function (socket) {
     });
 
     socket.on('message', (msg) => {
-        // fs.appendFile('data.txt', msg + '\n', (err) => {
-        //     if (err) throw err;
-        //     console.log(msg + 'was appended to data.txt')
-        // })
-        console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);
+        msg['time'] = new Date().toLocaleString();
+        var chat = fs.readFileSync('content.txt').toString();
+        var old_data = JSON.parse(chat);
+        var found = old_data.find(el => {
+            return el.userid == msg.userid;
+        })
+        if (found != undefined) {
+            var index = old_data.findIndex(el => {
+                return el.userid == msg.userid;
+            })
+            old_data[index].content.push(msg);
+            fs.truncateSync('content.txt');
+            fs.writeFileSync('content.txt', JSON.stringify(old_data));
+            
+        } else {
+
+            /** console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);*/
+
+            
+        }
         io.emit('message', msg);
-    });
+    })
 });
 
 http.listen(3000, function () {
