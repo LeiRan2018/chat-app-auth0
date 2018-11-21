@@ -39,12 +39,16 @@ io.on('connection', function (socket) {
             old_data[index].content.push(msg);
             fs.truncateSync('content.txt');
             fs.writeFileSync('content.txt', JSON.stringify(old_data));
-            
+
         } else {
+            // var data = msg;
+            // delete data.userid;
+            var new_data = { "userid": msg['userid'], "content": [msg] };
+            old_data.push(new_data);
+            fs.truncateSync('content.txt');
+            fs.writeFileSync('content.txt', JSON.stringify(old_data));
+            console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);
 
-            /** console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);*/
-
-            
         }
         io.emit('message', msg);
     })
