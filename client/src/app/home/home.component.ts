@@ -11,11 +11,15 @@ import { Chats } from '../models/chats.model';
 export class HomeComponent implements OnInit {
   currentUser: any;
   chats: Array<Chats>;
+  checkUB: boolean = false;
+  id: string;
+  contactid : string;
   constructor(
     private chat: ChatService,
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
   }
   // get diagnostic() { return JSON.stringify(this.currentUser); }
   ngOnInit() {
@@ -27,12 +31,28 @@ export class HomeComponent implements OnInit {
     this.chat.sendMsg(meg);
   }
   sendMessage(meg: string) {
-    this.chat.sendMsg({ meg: meg, userid: this.currentUser.userid });
+    let time = new Date().toLocaleString();
+    if (this.checkUB){
+      this.id = this.currentUser.userid + this.contactid;
+      // console.log(combineid);
+    }else {
+      this.id = this.currentUser.userid;
+    }
+    this.chat.sendMsg({ meg: meg, username: this.currentUser.username, userid: this.id, time: time, status: this.checkUB });
+
   }
   getChat() {
     this.chat.messages.subscribe(msg => {
       console.log(msg);
       this.chats.push(msg);
+
     });
+  }
+  getinfo(id: string) {
+    this.contactid = id;
+    console.log(id);
+    this.checkUB = true;
+    console.log(this.checkUB);
+    
   }
 }

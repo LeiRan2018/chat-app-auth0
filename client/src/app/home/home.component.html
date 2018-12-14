@@ -1,13 +1,27 @@
 <app-header></app-header>
-<p>{{currentUser.userid}}</p>
 <p>{{currentUser.username}}</p>
-<!-- <p>{{currentUser.content}}</p> -->
-<li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.content'>{{info.meg + ' : '+ info.time}}</li>
-<li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.userid + ' : '+ chat.meg}}</li>
-<div class="fixed-bottom">
-    <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
-    <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='' ">Send
-        Message</button>
-    <button type="button" class="btn btn-secondary" (click)="senduserid('')">userid</button>
-  
+
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <button type="button" (click)="getinfo(info.userid)" class="list-group-item list-group-item-info" *ngFor='let info of currentUser.userlist'>{{info.username}}</button>
+        </div>
+        <div class="col-8">
+            <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.content'>{{info.username +
+                ' :
+                '+ info.meg +' ' + info.time}}</li>
+            <!-- <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.userid + ' : '+ chat.meg}}</li> -->
+            <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.username +' : '+
+                chat.meg +
+                ' '+ chat.time}}</li>
+
+            <div>
+                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
+                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='' ">Send
+                    Message</button>
+                <button type="button" class="btn btn-secondary" (click)="senduserid('')">userid</button>
+
+            </div>
+        </div>
+    </div>
 </div>

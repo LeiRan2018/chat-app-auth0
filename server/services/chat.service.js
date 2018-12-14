@@ -58,13 +58,14 @@ exports.postuser = async function (data) {
         })
         if (found != undefined) {
             var userid = found.userid;
-            var content = fs.readFileSync('content.txt').toString();
+            var content = fs.readFileSync('content1.txt').toString();
             var info = JSON.parse(content);
             var founduserid = info.find(el => {
                 return el.userid == userid;
             })
             founduserid['username'] = found['username'];
-            // console.log(founduserid);
+            founduserid['userlist'] = old_data;
+            console.log(founduserid);
             return founduserid;
         } else {
             return ' not existed';

@@ -11,12 +11,16 @@ export class WebsocketService {
   private socket;
 
   constructor() { }
-
+  room = "abc123";
   connect(): Rx.Subject<MessageEvent> {
 
     this.socket = io(`http://localhost:3000`);
 
     let observable = new Observable(observer => {
+      this.socket.on('one-one',this.room);
+        // Connected, let's sign-up for to receive messages for this room
+     
+    
       this.socket.on('message', (data) => {
         console.log("Received message from Websocket Server")
         observer.next(data);
@@ -30,12 +34,27 @@ export class WebsocketService {
       next: (data: Object) => {
         this.socket.emit('message', data);
       },
-      
+
     };
 
     // we return our Rx.Subject which is a combination
     // of both an observer and observable.
     return Rx.Subject.create(observer, observable);
   }
+  getMessages(room) {
 
+    let observable = new Observable(observer => {
+
+        this.socket.on('one-one', (chat) => {
+
+            if (chat.conversation_id === room) {
+                observer.next(chat);
+            }
+        })
+
+    });
+
+    return observable;
+
+}
 }
