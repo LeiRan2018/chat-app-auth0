@@ -42,7 +42,9 @@ export class ChatService {
       map(res => { return res['data'] })
     );
   }
-
+  postchat(msg: any) {
+    return this.http.post(`${this.api}/postchat`, { 'data': msg });
+  }
   postusername(username: any) {
     return this.http.post(`${this.api}/login`, { 'data': username }).pipe(
       map(res => {

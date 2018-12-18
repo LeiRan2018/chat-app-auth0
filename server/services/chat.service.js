@@ -26,13 +26,27 @@ exports.getchat = async function (id) {
 };
 exports.postchat = async function (data) {
     try {
-        var userid = shortid.generate();   
+        //save this user to the content.txt file 
+        var userid = shortid.generate();
+        var user = { "userid": userid, "content": [] };
+        var chat1 = fs.readFileSync('content1.txt').toString();
+        var old_user = JSON.parse(chat1);
+        var found1 = old_user.find(el => {
+            return el.userid == user.userid;
+        })
+        if (found1 == undefined) {
+            old_user.push(user);
+            fs.truncateSync('content1.txt');
+            fs.writeFileSync('content1.txt', JSON.stringify(old_user));
+        }
+
         data['userid'] = userid;
         var chat = fs.readFileSync('data/user.txt').toString();
         var old_data = JSON.parse(chat);
         var found = old_data.find(el => {
             return el.username == data.username;
         })
+        //save the new user to the user.txt file if not found
         if (found == undefined) {
             old_data.push(data);
             fs.truncateSync('data/user.txt');
@@ -41,6 +55,8 @@ exports.postchat = async function (data) {
         } else {
             return 'Account already existed';
         }
+
+
 
 
     } catch (e) {
@@ -65,7 +81,7 @@ exports.postuser = async function (data) {
             })
             founduserid['username'] = found['username'];
             founduserid['userlist'] = old_data;
-            console.log(founduserid);
+            // console.log(founduserid);
             return founduserid;
         } else {
             return ' not existed';
@@ -76,3 +92,27 @@ exports.postuser = async function (data) {
         throw Error('error occured while posting new data');
     }
 };
+exports.postnewchat = async function (data) {
+    try {
+        var content = fs.readFileSync('content1.txt').toString();
+        var info = JSON.parse(content);
+        var found = info.find(el => {
+            return el.userid == data.userid;
+        })
+        console.log(data);
+        if (found != undefined) {
+            var index = info.findIndex(el => {
+                return el.userid == found.userid;
+            })
+            found["content"].push(data.msg);
+            info[index] = found;
+            fs.truncateSync('content1.txt');
+            fs.writeFileSync('content1.txt', JSON.stringify(info));
+
+        }
+
+
+    } catch (e) {
+        throw Error('error occured while posting new data');
+    }
+}

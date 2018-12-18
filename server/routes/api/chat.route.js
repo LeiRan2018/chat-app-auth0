@@ -7,4 +7,5 @@ router.get('/:id', chatController.getchat);
 // router.post('/:id/post', chatController.postchat);
 router.post('/post', chatController.postchat);
 router.post('/login', chatController.postuser);
+router.post('/postchat', chatController.postnewchat);
 module.exports = router;

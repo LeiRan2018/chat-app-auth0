@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-4">
-            <button type="button" (click)="getinfo(info.userid)" class="list-group-item list-group-item-info" *ngFor='let info of currentUser.userlist'>{{info.username}}</button>
+            <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.userlist'>{{info.username}}</li>
         </div>
         <div class="col-8">
             <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.content'>{{info.username +
@@ -16,11 +16,9 @@
                 ' '+ chat.time}}</li>
 
             <div>
-                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
-                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='' ">Send
+                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''; savedata()">
+                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value=''; savedata()">Send
                     Message</button>
-                <button type="button" class="btn btn-secondary" (click)="senduserid('')">userid</button>
-
             </div>
         </div>
     </div>
