@@ -11,7 +11,7 @@ import { Chats } from '../models/chats.model';
 export class HomeComponent implements OnInit {
   currentUser: any;
   chats: Array<Chats>;
-
+  data: any;
   constructor(
     private chat: ChatService,
   ) {
@@ -35,14 +35,11 @@ export class HomeComponent implements OnInit {
     this.chat.messages.subscribe(msg => {
 
       this.chats.push(msg);
-
     });
   }
   savedata() {
-    this.chat.messages.subscribe(msg => {
-      this.chat.postchat({ msg: msg, userid: this.currentUser.userid }).subscribe();
-      console.log(msg);
-    })
+      // this.chat.postchat({ msg: this.data, userid: this.currentUser.userid }).subscribe();
+      console.log(this.chats);
   }
 
 }

@@ -1,6 +1,6 @@
 <app-header></app-header>
 <p>{{currentUser.username}}</p>
-
+<p>{{data}}</p>
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -16,8 +16,8 @@
                 ' '+ chat.time}}</li>
 
             <div>
-                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''; savedata()">
-                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value=''; savedata()">Send
+                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
+                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';">Send
                     Message</button>
             </div>
         </div>
