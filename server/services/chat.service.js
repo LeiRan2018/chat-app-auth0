@@ -1,43 +1,20 @@
-// import {User} from '../models/user.model';
-// import {Chat} from '../models/chat.model';
-var User = require('../models/user.model');
-var Chat = require('../models/chat.model');
 var fs = require('fs');
 var shortid = require('shortid');
-exports.getchat = async function (id) {
-    try {
 
-        var chat = fs.readFileSync('./data.txt').toString();
-        var data = JSON.parse(chat);
-        var query;
-        data.forEach(element => {
-            if (element.userid == id) {
-                query = element
-            }
-        });
-        if (query != undefined) {
-            return query;
-        } else {
-            return false;
-        }
-    } catch (e) {
-        throw Error('error occured while finding userid');
-    }
-};
 exports.postchat = async function (data) {
     try {
         //save this user to the content.txt file 
         var userid = shortid.generate();
         var user = { "userid": userid, "content": [] };
-        var chat1 = fs.readFileSync('content1.txt').toString();
+        var chat1 = fs.readFileSync('data/content.txt').toString();
         var old_user = JSON.parse(chat1);
         var found1 = old_user.find(el => {
             return el.userid == user.userid;
         })
         if (found1 == undefined) {
             old_user.push(user);
-            fs.truncateSync('content1.txt');
-            fs.writeFileSync('content1.txt', JSON.stringify(old_user));
+            fs.truncateSync('data/content.txt');
+            fs.writeFileSync('data/content.txt', JSON.stringify(old_user));
         }
 
         data['userid'] = userid;
@@ -55,10 +32,6 @@ exports.postchat = async function (data) {
         } else {
             return 'Account already existed';
         }
-
-
-
-
     } catch (e) {
         throw Error('error occured while posting new data');
     }
@@ -74,27 +47,24 @@ exports.postuser = async function (data) {
         })
         if (found != undefined) {
             var userid = found.userid;
-            var content = fs.readFileSync('content1.txt').toString();
+            var content = fs.readFileSync('data/content.txt').toString();
             var info = JSON.parse(content);
             var founduserid = info.find(el => {
                 return el.userid == userid;
             })
             founduserid['username'] = found['username'];
             founduserid['userlist'] = old_data;
-            // console.log(founduserid);
             return founduserid;
         } else {
             return ' not existed';
         }
-
-
     } catch (e) {
         throw Error('error occured while posting new data');
     }
 };
 exports.postnewchat = async function (data) {
     try {
-        var content = fs.readFileSync('content1.txt').toString();
+        var content = fs.readFileSync('data/content.txt').toString();
         var info = JSON.parse(content);
         var found = info.find(el => {
             return el.userid == data.userid;
@@ -106,12 +76,10 @@ exports.postnewchat = async function (data) {
             })
             found["content"].push(...data.msg);
             info[index] = found;
-            fs.truncateSync('content1.txt');
-            fs.writeFileSync('content1.txt', JSON.stringify(info));
+            fs.truncateSync('data/content.txt');
+            fs.writeFileSync('data/content.txt', JSON.stringify(info));
 
         }
-
-
     } catch (e) {
         throw Error('error occured while posting new data');
     }

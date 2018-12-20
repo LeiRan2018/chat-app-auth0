@@ -1,6 +1,6 @@
 <app-header></app-header>
 <p>{{currentUser.username}}</p>
-<p>{{data}}</p>
+
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -10,7 +10,6 @@
             <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.content'>{{info.username +
                 ' :
                 '+ info.meg +' ' + info.time}}</li>
-            <!-- <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.userid + ' : '+ chat.meg}}</li> -->
             <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.username +' : '+
                 chat.meg +
                 ' '+ chat.time}}</li>

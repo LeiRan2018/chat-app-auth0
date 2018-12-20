@@ -9,7 +9,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule }   from '@angular/forms';
 import { HeaderComponent } from './header/header.component';
 import { SignComponent } from './sign/sign.component';
-// import { NgbdModalContent } from './header/header.component';
+
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
@@ -20,7 +20,6 @@ import { AuthGuard } from './guards/auth.guard';
     LoginComponent,
     HeaderComponent,
     SignComponent,
-    // NgbdModalContent,
     HomeComponent
   ],
   imports: [

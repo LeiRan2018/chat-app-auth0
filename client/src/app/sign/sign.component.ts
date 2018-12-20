@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
-import { Location } from '@angular/common';
 import { Sign } from '../models/sign.model';
 
 @Component({
@@ -14,7 +13,7 @@ export class SignComponent implements OnInit {
   mess: string;
   constructor(
     private chat: ChatService,
-    private location: Location) {
+  ) {
   }
 
 
@@ -22,8 +21,6 @@ export class SignComponent implements OnInit {
 
   ngOnInit() {
     this.model = new Sign('', '');
-    // this.senduserid('');
-    // this.getuserid();
   }
 
   senduserid(meg: string) {
@@ -34,17 +31,7 @@ export class SignComponent implements OnInit {
 
     this.chat.postuser(this.model)
       .subscribe(msg => { this.mess = msg });
-
-    // this.location.back();
   }
-
-  // getuserid() {
-  //   this.chat.messages.subscribe(msg => {
-  //     console.log('userid');
-  //     this.userid = msg['userid'];
-  //     this.model = new Sign(this.userid, '', '');
-  //   })
-  // }
 
 }
 

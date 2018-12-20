@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
-import { stringify } from '@angular/compiler/src/util';
 import { Chats } from '../models/chats.model';
 
 @Component({
@@ -22,9 +21,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.getChat();
   }
-  senduserid(meg: string) {
-    this.chat.sendMsg(meg);
-  }
+
   sendMessage(meg: string) {
     let time = new Date().toLocaleString();
 
@@ -37,9 +34,6 @@ export class HomeComponent implements OnInit {
       this.chats.push(msg);
     });
   }
-  savedata() {
-      // this.chat.postchat({ msg: this.data, userid: this.currentUser.userid }).subscribe();
-      console.log(this.chats);
-  }
+  
 
 }
