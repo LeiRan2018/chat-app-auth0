@@ -32,6 +32,8 @@ export class HomeComponent implements OnInit {
     this.chat.messages.subscribe(msg => {
 
       this.chats.push(msg);
+      console.log(msg);
+      this.chat.postchat({ msg: msg, userid: this.currentUser.userid }).subscribe();
     });
   }
   

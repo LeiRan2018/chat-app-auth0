@@ -74,7 +74,7 @@ exports.postnewchat = async function (data) {
             var index = info.findIndex(el => {
                 return el.userid == found.userid;
             })
-            found["content"].push(...data.msg);
+            found["content"].push(data.msg);
             info[index] = found;
             fs.truncateSync('data/content.txt');
             fs.writeFileSync('data/content.txt', JSON.stringify(info));
