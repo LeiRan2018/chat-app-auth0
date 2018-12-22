@@ -46,6 +46,7 @@ exports.postuser = async function (data) {
             return el.username == data.username;
         })
         if (found != undefined) {
+            
             var userid = found.userid;
             var content = fs.readFileSync('data/content.txt').toString();
             var info = JSON.parse(content);

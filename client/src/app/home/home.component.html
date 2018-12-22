@@ -6,10 +6,19 @@
         <div class="col-4">
             <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.userlist'>{{info.username}}</li>
         </div>
+
         <div class="col-8">
-            <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.content'>{{info.username +
-                ' :
-                '+ info.meg +' ' + info.time}}</li>
+            <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
+                *ngFor='let info of currentUser.content; let i = index'>
+                <div class="row">
+                    <div class="col-8"><b>{{info.username}}</b> </div>
+                    <div class="col-4">{{info.time}}</div>
+
+                </div>
+                <div class="row">
+                    <div class="col-11">{{info.meg}}</div>
+                </div>
+            </div>
             <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.username +' : '+
                 chat.meg +
                 ' '+ chat.time}}</li>
