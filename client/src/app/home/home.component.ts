@@ -11,12 +11,13 @@ export class HomeComponent implements OnInit {
   currentUser: any;
   chats: Array<Chats>;
   data: any;
+  hindex: boolean;
   constructor(
     private chat: ChatService,
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+    this.hindex = (this.currentUser.content.length - 1 ) % 2 == 0 ? true : false;
   }
   ngOnInit() {
     this.getChat();
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
       console.log(msg);
       this.chat.postchat({ msg: msg, userid: this.currentUser.userid }).subscribe();
     });
+    
   }
   
 

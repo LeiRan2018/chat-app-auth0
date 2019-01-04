@@ -1,5 +1,6 @@
 <app-header></app-header>
 <p>{{currentUser.username}}</p>
+<p>{{hindex}}</p>
 
 <div class="container">
     <div class="row">
@@ -19,15 +20,34 @@
                     <div class="col-11">{{info.meg}}</div>
                 </div>
             </div>
-            <li class="list-group-item list-group-item-info" *ngFor='let chat of chats'>{{chat.username +' : '+
-                chat.meg +
-                ' '+ chat.time}}</li>
 
-            <div>
-                <input #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''">
-                <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';">Send
-                    Message</button>
+            <div [className]="hindex == true || i % 2 == 1 ? 'list-group-item list-group-item-dark':'list-group-item list-group-item-light'"
+                *ngFor='let chat of chats;  let i = index'>
+                <div class="row">
+                    <div class="col-8"><b>{{chat.username}}</b> </div>
+                    <div class="col-4">{{chat.time}}</div>
+
+                </div>
+                <div class="row">
+                    <div class="col-11">{{chat.meg}}</div>
+                </div>
+            </div>
+            <div class="container bg-light">
+                <div class="row ">
+                    <div class="col "><br>
+                        <textarea rows="4" class="container-fluid " #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''"></textarea>
+                    </div>
+                </div>
+               
+                <div class="row ">
+                    <div class="col text-right">
+                        <button type="button" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';">Send
+                            Message</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+
