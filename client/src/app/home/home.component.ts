@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Chats } from '../models/chats.model';
-
+import { FormGroup, FormControl } from '@angular/forms';
+import { Validators } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,12 +13,18 @@ export class HomeComponent implements OnInit {
   chats: Array<Chats>;
   data: any;
   hindex: boolean;
+  profileForm = new FormGroup({
+
+    firstName: new FormControl('', Validators.required),
+
+  });
   constructor(
+
     private chat: ChatService,
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.hindex = (this.currentUser.content.length - 1 ) % 2 == 0 ? true : false;
+    this.hindex = (this.currentUser.content.length + 1) % 2 == 0 ? true : false;
   }
   ngOnInit() {
     this.getChat();
@@ -35,8 +42,8 @@ export class HomeComponent implements OnInit {
       console.log(msg);
       this.chat.postchat({ msg: msg, userid: this.currentUser.userid }).subscribe();
     });
-    
+
   }
-  
+
 
 }

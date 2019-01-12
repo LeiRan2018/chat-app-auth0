@@ -14,20 +14,26 @@ import { SignComponent } from './sign/sign.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NameEditorComponent } from './name-editor/name-editor.component';
+import { ProfileEditorComponent } from './profile-editor/profile-editor.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
     SignComponent,
-    HomeComponent
+    HomeComponent,
+    NameEditorComponent,
+    ProfileEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   entryComponents:[
     LoginComponent
