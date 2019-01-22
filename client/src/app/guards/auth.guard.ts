@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Injectable()
 export class AuthGuard implements CanActivate {

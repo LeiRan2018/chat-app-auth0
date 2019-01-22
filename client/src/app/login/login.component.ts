@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../chat.service';
-import { Location } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { Router } from '@angular/router';
+import { Login } from '../models/login.model';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,13 +11,10 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class LoginComponent implements OnInit {
 
   userid: string;
-  model = {
-    username: ''
-  }
+  model: Login;
   mess: string;
   returnUrl: string;
   logged: boolean = false;
-  test = 'hello';
   constructor(
     private chat: ChatService,
     private router: Router,
@@ -31,9 +26,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.returnUrl = '/';
     this.chat.logout();
-
+    this.model = new Login('');
   }
- 
+
   senduser() {
     this.chat.postusername(this.model)
       .subscribe(msg => {
@@ -46,5 +41,5 @@ export class LoginComponent implements OnInit {
 
       });
   }
- 
+
 }
