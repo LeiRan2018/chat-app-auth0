@@ -11,13 +11,11 @@ import { Validators } from '@angular/forms';
 export class HomeComponent implements OnInit {
   currentUser: any;
   chats: Array<Chats>;
-  data: any;
   hindex: boolean;
-  profileForm = new FormGroup({
-
-    firstName: new FormControl('', Validators.required),
-
+  chatForm = new FormGroup({
+    chat: new FormControl('', Validators.required),
   });
+
   constructor(
 
     private chat: ChatService,
@@ -25,6 +23,7 @@ export class HomeComponent implements OnInit {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.hindex = (this.currentUser.content.length + 1) % 2 == 0 ? true : false;
+
   }
   ngOnInit() {
     this.getChat();
@@ -32,9 +31,10 @@ export class HomeComponent implements OnInit {
 
   sendMessage(meg: string) {
     let time = new Date().toLocaleString();
-
     this.chat.sendMsg({ meg: meg, username: this.currentUser.username, userid: this.currentUser.userid, time: time });
-
+    if (this.chatForm.valid) {
+      this.chatForm.reset();
+    }
   }
   getChat() {
     this.chat.messages.subscribe(msg => {

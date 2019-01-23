@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { WebsocketService } from './websocket.service';
-import { Observable, Subject } from 'rxjs/Rx';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Subject } from 'rxjs/Rx';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Injectable()
 export class ChatService {
-  api = `http://localhost:3000/api/chat`;
+  api = `http://localhost:3000/api`;
   messages: Subject<any>;
 
   // Our constructor calls our wsService connect method
@@ -28,12 +28,12 @@ export class ChatService {
   };
 
   postuser(user: any) {
-    return this.http.post(`${this.api}/post`, { 'data': user }).pipe(
+    return this.http.post(`${this.api}/sign`, { 'data': user }).pipe(
       map(res => { return res['data'] })
     );
   }
   postchat(msg: any) {
-    return this.http.post(`${this.api}/postchat`, { 'data': msg });
+    return this.http.post(`${this.api}/chat/postchat`, { 'data': msg });
   }
   postusername(username: any) {
     return this.http.post(`${this.api}/login`, { 'data': username }).pipe(

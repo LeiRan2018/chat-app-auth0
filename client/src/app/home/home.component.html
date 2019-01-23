@@ -1,22 +1,25 @@
 <app-header></app-header>
-<p>{{currentUser.username}}</p>
- <p>{{hindex}}</p>
+<h4 class="text-center p-3">HELLO, {{currentUser.username}}</h4>
+
 <div class="container">
     <div class="row">
-        <div class="col-4">
-            <li class="list-group-item list-group-item-info" *ngFor='let info of currentUser.userlist'>{{info.username}}</li>
+        <div class="col-2">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.userlist'><b>{{info.username}}</b></li>
+            </ul>
+
         </div>
 
-        <div class="col-8">
+        <div class="col-10">
             <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
                 *ngFor='let info of currentUser.content; let i = index'>
                 <div class="row">
                     <div class="col-8"><b>{{info.username}}</b> </div>
-                    <div class="col-4">{{info.time}}</div>
+                    <div class="col-4 text-right">{{info.time}}</div>
 
                 </div>
                 <div class="row">
-                    <div class="col-11">{{info.meg}}</div> 
+                    <div class="col-11">{{info.meg}}</div>
                 </div>
             </div>
 
@@ -24,7 +27,7 @@
                 *ngFor='let chat of chats;  let i = index'>
                 <div class="row">
                     <div class="col-8"><b>{{chat.username}}</b> </div>
-                    <div class="col-4">{{chat.time}}</div>
+                    <div class="col-4 text-right">{{chat.time}}</div>
 
                 </div>
                 <div class="row">
@@ -33,14 +36,15 @@
             </div>
             <div class="bg-light">
                 <div class="row ">
-                    <div class="col " [formGroup]="profileForm"><br>
-                        <textarea rows="4" class="container-fluid "  #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''" formControlName="firstName" required></textarea>
+                    <div class="col " [formGroup]="chatForm"><br>
+                        <textarea rows="4" class="container-fluid " #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''"
+                            formControlName="chat" required></textarea>
                     </div>
                 </div>
-               
+
                 <div class="row ">
                     <div class="col text-right">
-                        <button type="button" [disabled]="!profileForm.valid" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';" >Send
+                        <button type="button" [disabled]="!chatForm.valid" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';">Send
                             Message</button>
                     </div>
                 </div>
@@ -49,13 +53,3 @@
     </div>
 </div>
 
-
-<!-- <div [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  
- 
-      First Name:
-      <textarea type="text" formControlName="firstName" required></textarea>
-      <textarea rows="4" class="container-fluid "  #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''" formControlName="firstName" required></textarea>
-  
-    
-</div><button type="button" [disabled]="!profileForm.valid">Submit</button> -->

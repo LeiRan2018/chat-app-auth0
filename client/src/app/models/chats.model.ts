@@ -1,7 +1,8 @@
-
-
 export class Chats {
-  userid: string;
-  meg: string;
+  constructor(
+    public userid: string,
+    public meg: string
+  ) { }
+
 
 }
