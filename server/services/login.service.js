@@ -1,4 +1,6 @@
 var fs = require('fs');
+var user = requtre('./models/user.model');
+const Sequelize = require('sequelize');
 
 exports.postlogin = async function (data) {
     try {
@@ -26,3 +28,23 @@ exports.postlogin = async function (data) {
         throw Error('error occured while posting new data');
     }
 };
+
+const User = user;
+const sequelize = new Sequelize('chat-app', 'root', 'example', {
+    dialect: 'mysql',
+    host: "127.0.0.1",
+    port: 3306,
+});
+
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connection has been established successfully.');
+    })
+    .catch(err => {
+        console.error('Unable to connect to the database:', err);
+    });
+    
+    User.findAll().then(users => {
+        console.log(users)
+    });
