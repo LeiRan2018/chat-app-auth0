@@ -3,6 +3,6 @@ var router = express.Router();
 
 var signController = require('../../controllers/sign.controller');
 
-router.post('/sign', signController);
+router.post('/', signController.postsign);
 
 module.exports = router;

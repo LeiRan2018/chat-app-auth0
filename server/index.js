@@ -51,15 +51,15 @@ sequelize
 // });
     const User = user;
 
-sequelize.sync()
-    .then(() => User.create({
-        userID: 'Ran',
-        userName: 'dff',
-        email: 'jack'
-    }))
-    .then(user => {
-        console.log(user.toJSON());
-    });
+// sequelize.sync()
+//     .then(() => User.create({
+//         userID: 'Ran',
+//         userName: 'dff',
+//         email: 'jack'
+//     }))
+//     .then(user => {
+//         console.log(user.toJSON());
+//     });
 
 User.findAll().then(users => {
     console.log(users)
