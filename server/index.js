@@ -7,7 +7,7 @@ var methodOverride = require('method-override');
 var api = require('./routes/api.route');
 var bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-var user = require('./models/user.model');
+var shortid = require('shortid');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -35,35 +35,11 @@ io.on('connection', function (socket) {
     })
 });
 
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch(err => {
-        console.error('Unable to connect to the database:', err);
-    });
 
-// const User = sequelize.define('user', {
-//     userID: Sequelize.STRING,
-//     userName: Sequelize.STRING,
-//     email: Sequelize.STRING
-// });
-    const User = user;
 
-// sequelize.sync()
-//     .then(() => User.create({
-//         userID: 'Ran',
-//         userName: 'dff',
-//         email: 'jack'
-//     }))
-//     .then(user => {
-//         console.log(user.toJSON());
-//     });
 
-User.findAll().then(users => {
-    console.log(users)
-});
+ 
+
 
 http.listen(3000, function () {
     console.log('listening on *:3000');
