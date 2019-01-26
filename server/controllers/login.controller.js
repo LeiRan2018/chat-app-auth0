@@ -4,7 +4,7 @@ exports.postlogin = async function (req, res) {
     try {
         var data = req.body.data;
         var query = await loginService.postlogin(data);
-        console.log(query.userID);
+        console.log(query);
         return res
             .status(200)
             .json({ status: 200, data: query, message: "successfully" });
