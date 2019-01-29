@@ -20,8 +20,10 @@ export class HeaderComponent implements OnInit {
   }
 
   logout() {
-    this.chat.logout();
-    location.reload();
+    this.chat.logout().subscribe(() => {
+      localStorage.removeItem('currentUser');
+      location.reload();
+    });
   }
 
 }

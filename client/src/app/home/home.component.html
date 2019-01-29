@@ -1,26 +1,27 @@
 <app-header></app-header>
-<h4 class="text-center p-3">HELLO, {{currentUser.username}}</h4>
+<h4 class="text-center p-3">HELLO, {{currentUser | json}}</h4>
+<h4 class="text-center p-3">HELLO, {{test | json}}</h4>
 
 <div class="container">
     <div class="row">
-        <div class="col-2">
+        <!-- <div class="col-2">
             <ul class="list-group">
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.userlist'><b>{{info.username}}</b></li>
             </ul>
 
-        </div>
+        </div> -->
 
         <div class="col-10">
             <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
-                *ngFor='let info of currentUser.content; let i = index'>
+                *ngFor='let info of currentUser.message; let i = index'>
                 <div class="row">
-                    <div class="col-8"><b>{{info.username}}</b> </div>
-                    <div class="col-4 text-right">{{info.time}}</div>
+                    <div class="col-8"><b>{{info}}</b> </div>
+                    <!-- <div class="col-4 text-right">{{info.time}}</div> -->
 
                 </div>
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-11">{{info.meg}}</div>
-                </div>
+                </div> -->
             </div>
 
             <div [className]=" (hindex == true ? !(i % 2 == 1) :(i % 2 == 1) ) ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"

@@ -30,16 +30,18 @@ export class LoginComponent implements OnInit {
   }
 
   senduser() {
-    this.chat.postusername(this.model)
-      .subscribe(msg => {
-        if (typeof (msg) == 'string') {
-          this.mess = msg;
-          this.logged = true;
-        } else {
-          this.router.navigate([this.returnUrl]);
-        }
-
-      });
+    this.chat.postusername(this.model).subscribe(()=>{
+      this.router.navigate(['/']);
+    });
+    
+      // .subscribe(msg => {
+      //   if (typeof (msg) == 'string') {
+      //     this.mess = msg;
+      //     this.logged = true;
+      //   } else {
+      //     this.router.navigate(['/']);
+      //   }
+      // });
   }
 
 }

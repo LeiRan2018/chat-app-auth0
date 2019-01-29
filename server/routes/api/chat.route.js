@@ -5,5 +5,5 @@ var chatController = require('../../controllers/chat.controller');
 
 router.post('/post', chatController.postchat);
 router.post('/login', chatController.postuser);
-router.post('/postchat', chatController.postnewchat);
+router.post('/postchat', chatController.postchat);
 module.exports = router;

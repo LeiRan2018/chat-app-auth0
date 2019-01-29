@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
+  test: Array<Object>;
 
   constructor(
 
@@ -22,7 +23,9 @@ export class HomeComponent implements OnInit {
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.hindex = (this.currentUser.content.length + 1) % 2 == 0 ? true : false;
+    this.test = JSON.parse(localStorage.getItem('test'));
+    // this.hindex = (this.currentUser.message.length + 1) % 2 == 0 ? true : false;
+    // this.hindex = true;
 
   }
   ngOnInit() {
@@ -32,6 +35,7 @@ export class HomeComponent implements OnInit {
   sendMessage(meg: string) {
     let time = new Date().toLocaleString();
     this.chat.sendMsg({ meg: meg, username: this.currentUser.username, userid: this.currentUser.userid, time: time });
+    this.chat.postchat({ msg: meg, userid: this.currentUser.userid, chatid: this.currentUser.chatid }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
@@ -39,8 +43,8 @@ export class HomeComponent implements OnInit {
   getChat() {
     this.chat.messages.subscribe(msg => {
       this.chats.push(msg);
-      console.log(msg);
-      this.chat.postchat({ msg: msg, userid: this.currentUser.userid }).subscribe();
+      console.log(msg.meg);
+      // this.chat.postchat({ msg: msg.meg, userid: this.currentUser.userid, chatid: this.currentUser.chatid }).subscribe();
     });
 
   }
