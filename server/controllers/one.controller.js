@@ -1,10 +1,10 @@
-var chatService = require("../services/chat.service");
+var oneService = require("../services/one.service");
 
 
-exports.postchat = async function (req, res) {
+exports.postone = async function (req, res) {
   try {
     var data = req.body.data;
-    var query = await chatService.postchat(data);
+    var query = await oneService.postone(data);
     return res
       .status(200)
       .json({ status: 200, data: query, message: "successfully" });
