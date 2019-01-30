@@ -7,6 +7,7 @@ exports.postlogin = async function (req, res) {
         var chatroom = await loginService.postlogin2();
         var logtime = await loginService.postlogin3(user.userID);
         var message = await loginService.postlogin4(chatroom.chatRoomID);
+        var contacts = await loginService.postlogin5();
         var sortedmes = [];
         logtime.forEach(time => {
             console.log(time.createdAt + ',' + time.updatedAt)
@@ -30,7 +31,8 @@ exports.postlogin = async function (req, res) {
                     username: user.userName,
                     userid: user.userID,
                     chatid: chatroom.chatRoomID,
-                    message: sortedmes
+                    message: sortedmes,
+                    contacts: contacts
                 }, message: "successfully"
             });
     } catch (e) {

@@ -73,6 +73,15 @@ exports.postlogin4 = async function (data) {
     }
 };
 
+exports.postlogin5 = async function () {
+    try {
+        return user.findAll();
+    }
+    catch (e) {
+        throw Error('error occured while catching user list');
+    }
+}
+
 exports.postlogout = async function (data) {
     try {
         // console.log(data + 'wefewfweijfwef');
