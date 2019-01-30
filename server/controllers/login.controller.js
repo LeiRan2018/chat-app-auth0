@@ -4,7 +4,7 @@ exports.postlogin = async function (req, res) {
     try {
         var data = req.body.data;
         var user = await loginService.postlogin(data);
-        var chatroom = await loginService.postlogin2(user.userID);
+        var chatroom = await loginService.postlogin2();
         var logtime = await loginService.postlogin3(user.userID);
         var message = await loginService.postlogin4(chatroom.chatRoomID);
         var sortedmes = [];

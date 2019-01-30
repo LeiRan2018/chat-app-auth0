@@ -15,15 +15,14 @@ export class HomeComponent implements OnInit {
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
-  test: Array<Object>;
-
+  
   constructor(
 
     private chat: ChatService,
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.test = JSON.parse(localStorage.getItem('test'));
+    
     // this.hindex = (this.currentUser.message.length + 1) % 2 == 0 ? true : false;
     // this.hindex = true;
 

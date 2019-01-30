@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['/']);
     });
     
+  
       // .subscribe(msg => {
       //   if (typeof (msg) == 'string') {
       //     this.mess = msg;

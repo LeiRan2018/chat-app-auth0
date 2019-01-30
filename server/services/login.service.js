@@ -45,9 +45,9 @@ exports.postlogin = async function (data) {
     }
 };
 
-exports.postlogin2 = async function (data) {
+exports.postlogin2 = async function () {
     try {
-        let userchat = user_chatRoom.findOne({ where: { userID: data } });
+        let userchat = chatRoom.findOne();
         return userchat;
     }
     catch (e) {
@@ -76,7 +76,6 @@ exports.postlogin4 = async function (data) {
 exports.postlogout = async function (data) {
     try {
         // console.log(data + 'wefewfweijfwef');
-
         user_chatRoom.findOne(
             {
                 where: { userID: data.userid },
