@@ -43,6 +43,15 @@ export class ChatService {
       })
     );
   }
+
+  one(name: string) {
+    return this.http.post(`${this.api}/one`, {data: name}).pipe(
+      map(res => {
+        localStorage.setItem(res['data'].roomID, JSON.stringify(res['data']));
+        return res['data']
+      })
+    );
+  }
   logout() {
     // console.log(JSON.parse(localStorage.getItem('currentUser')));
     return this.http.post(`${this.api}/login/out`, { 'data': JSON.parse(localStorage.getItem('currentUser')) }).pipe(

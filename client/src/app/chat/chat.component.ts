@@ -4,19 +4,17 @@ import { Chats } from '../models/chats.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-chat',
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ChatComponent implements OnInit {
   currentUser: any;
-  one: Object
   chats: Array<Chats>;
   hindex: boolean;
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
-  
   constructor(
 
     private chat: ChatService,
@@ -48,11 +46,4 @@ export class HomeComponent implements OnInit {
     });
 
   }
-  oneone(user: string){
-    this.chat.one(user + this.currentUser.username).subscribe(value =>{
-      this.one = JSON.parse(localStorage.getItem(value.roomID));
-    });
-  }
-
-
 }
