@@ -10,7 +10,8 @@ import { Validators } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   currentUser: any;
-  one: Object
+  one: Object;
+  two: string;
   chats: Array<Chats>;
   hindex: boolean;
   chatForm = new FormGroup({
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
   sendMessage(meg: string) {
     let time = new Date().toLocaleString();
     this.chat.sendMsg({ meg: meg, username: this.currentUser.username, userid: this.currentUser.userid, time: time });
-    this.chat.postchat({ msg: meg, userid: this.currentUser.userid, chatid: this.currentUser.chatid }).subscribe();
+    this.chat.postchat({ msg: meg, userid: this.currentUser.userid, chatid: this.two }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
@@ -49,9 +50,10 @@ export class HomeComponent implements OnInit {
 
   }
   oneone(user: string){
-    this.chat.one(user + this.currentUser.username).subscribe(value =>{
+    this.chat.one(user + ',' + this.currentUser.username).subscribe(value =>{
       this.one = JSON.parse(localStorage.getItem(value.roomID));
     });
+    this.two = user + this.currentUser.username;
   }
 
 
