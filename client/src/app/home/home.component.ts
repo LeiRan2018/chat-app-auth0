@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
+  roomID: string;
+  broadcast: boolean = true;
   
   constructor(
 
@@ -24,7 +26,7 @@ export class HomeComponent implements OnInit {
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    
+    this.roomID = JSON.parse(localStorage.getItem('currentUser')) ? JSON.parse(localStorage.getItem('currentUser')).chatid : '';  
     // this.hindex = (this.currentUser.message.length + 1) % 2 == 0 ? true : false;
     // this.hindex = true;
 
@@ -34,9 +36,8 @@ export class HomeComponent implements OnInit {
   }
 
   sendMessage(meg: string) {
-    let time = new Date().toLocaleString();
-    this.chat.sendMsg({ meg: meg, username: this.currentUser.username, userid: this.currentUser.userid, time: time });
-    this.chat.postchat({ msg: meg, userid: this.currentUser.userid, chatid: this.two }).subscribe();
+    this.chat.sendMsg({ meg: meg, userid: this.currentUser.userid });
+    this.chat.postchat({ msg: meg, chatid: this.roomID }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
@@ -52,8 +53,9 @@ export class HomeComponent implements OnInit {
   oneone(user: string){
     this.chat.one(user + ',' + this.currentUser.username).subscribe(value =>{
       this.one = JSON.parse(localStorage.getItem(value.roomID));
+      this.roomID = value.roomID;
     });
-    this.two = user + this.currentUser.username;
+    this.broadcast = false;
   }
 
 

@@ -1,31 +1,40 @@
 <app-header></app-header>
 <h4 class="text-center p-3">HELLO, {{currentUser | json}}</h4>
 <h4 class="text-center p-3">HELLO, {{one | json}}</h4>
-<!-- <p>{{contacts}}</p> -->
+<h4>{{broadcast}}</h4>
 <div class="container">
     <div class="row">
         <div class="col-2">
             <ul class="list-group">
+                <button type="button" class="btn btn-primary" (click)="broadcast()">broadcast</button>
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.contacts'>
                     <b>{{info.userName}}</b>
                     <button type="button" class="btn btn-primary" (click)="oneone(info.userName)">{{info.userName}}</button>
-                </li> 
+                </li>
             </ul>
 
         </div>
 
         <div class="col-10">
+            <div *ngIf="broadcast">
+                <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
+                    *ngFor='let info of currentUser.message; let i = index'>
+                    <div class="row">
+                        <div class="col-8"><b>{{info}}</b> </div>
+                        <div class="col-4 text-right">{{info.time}}</div>
 
-            <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
-                *ngFor='let info of currentUser.message; let i = index'>
-                <div class="row">
-                    <div class="col-8"><b>{{info}}</b> </div> 
-                    <div class="col-4 text-right">{{info.time}}</div>
-
+                    </div>
+                    <div class="row">
+                        <div class="col-11">{{info.meg}}</div>
+                    </div> -->
                 </div>
-                <div class="row">
-                    <div class="col-11">{{info.meg}}</div>
-                </div> -->
+            </div>
+            <div *ngIf="one">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-success py-4" *ngFor='let info of one.message'>
+                        <b>{{info | json}}</b>
+                    </li>
+                </ul>
             </div>
 
             <div [className]=" (hindex == true ? !(i % 2 == 1) :(i % 2 == 1) ) ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
