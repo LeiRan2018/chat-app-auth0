@@ -1,12 +1,13 @@
 <app-header></app-header>
-<h4 class="text-center p-3">HELLO, {{currentUser | json}}</h4>
-<h4 class="text-center p-3">HELLO, {{one | json}}</h4>
-<h4>{{broadcast}}</h4>
+ <h4 class="text-center p-3">HELLO, {{currentUser.username }}</h4> 
+<!-- <h4 class="text-center p-3">HELLO, {{one | json}}</h4>
+<h4>{{broadcast}}</h4> --> 
+<p>{{currentUser | json}}</p>
 <div class="container">
     <div class="row">
         <div class="col-2">
             <ul class="list-group">
-                <button type="button" class="btn btn-primary" (click)="broadcast()">broadcast</button>
+                <button type="button" class="btn btn-primary" (click)="broadcasted()">broadcast</button>
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.contacts'>
                     <b>{{info.userName}}</b>
                     <button type="button" class="btn btn-primary" (click)="oneone(info.userName)">{{info.userName}}</button>
