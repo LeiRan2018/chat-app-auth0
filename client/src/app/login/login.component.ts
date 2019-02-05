@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
   mess: string;
   returnUrl: string;
   logged: boolean = false;
+  error: Object;
   constructor(
     private chat: ChatService,
     private router: Router,
@@ -30,19 +31,9 @@ export class LoginComponent implements OnInit {
   }
 
   senduser() {
-    this.chat.postusername(this.model).subscribe(()=>{
-      this.router.navigate(['/']);
-    });
-    
-  
-      // .subscribe(msg => {
-      //   if (typeof (msg) == 'string') {
-      //     this.mess = msg;
-      //     this.logged = true;
-      //   } else {
-      //     this.router.navigate(['/']);
-      //   }
-      // });
+    this.chat.postusername(this.model).subscribe( 
+      ()=> {this.router.navigate(['/']);},
+      error => this.error = error );
   }
 
 }

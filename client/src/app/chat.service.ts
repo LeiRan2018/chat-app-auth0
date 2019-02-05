@@ -45,7 +45,7 @@ export class ChatService {
   }
 
   one(name: string) {
-    return this.http.post(`${this.api}/one`, {data: name}).pipe(
+    return this.http.post(`${this.api}/one`, { data: name }).pipe(
       map(res => {
         localStorage.setItem(res['data'].roomID, JSON.stringify(res['data']));
         return res['data']

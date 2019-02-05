@@ -5,25 +5,13 @@ exports.postlogin = async function (req, res) {
         var data = req.body.data;
         var user = await loginService.postlogin(data);
         var chatroom = await loginService.postlogin2();
-        var logtime = await loginService.postlogin3(user.userID);
         var message = await loginService.postlogin4(chatroom.chatRoomID);
         var contacts = await loginService.postlogin5();
-        var sortedmes = [];
-        logtime.forEach(time => {
-            console.log(time.createdAt + ',' + time.updatedAt)
+        var sortedmes = message.filter(element => {
+            if (+user.createdAt <= +element.createdAt) {
+                return element;
+            }
         });
-        message.forEach(element =>{
-            console.log(element.message + '' + element.createdAt)
-        });
-        message.forEach(element => {
-            logtime.forEach(time => {
-                if (+time.createdAt <= +element.createdAt && +time.updatedAt >= +element.createdAt) {
-                    console.log(element.message + '' + element.createdAt);
-                    sortedmes.push(element.message + '' + element.createdAt);
-                };
-            })
-        })
-        console.log(sortedmes);
         return res
             .status(200)
             .json({
@@ -43,7 +31,6 @@ exports.postlogin = async function (req, res) {
 exports.postlogout = async function (req, res) {
     try {
         var data = req.body.data;
-        console.log(data);
         var query = await loginService.postlogout(data);
         return res
             .status(200)

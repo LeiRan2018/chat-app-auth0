@@ -14,8 +14,8 @@
     </div>
 </nav>
 <form #loginForm="ngForm">
-  <div *ngIf = "logged">
-     {{'Your account is ' + mess + ' and please Sign up'}}
+  <div *ngIf = "error">
+     {{error.error | json}}
   </div>
  <br><br>
   <div class="form-group col-sm-5 mx-auto">

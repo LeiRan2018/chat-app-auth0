@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   roomID: string;
   broadcast: boolean = true;
   contact: Object;
+  oneonetag: string;
   constructor(
 
     private chat: ChatService,
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   sendMessage(meg: string) {
     this.chat.sendMsg({ meg: meg, userid: this.currentUser.userid });
-    this.chat.postchat({ msg: meg, chatid: this.roomID }).subscribe();
+    this.chat.postchat({ msg: meg + ' from ' + this.currentUser.username, chatid: this.roomID }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
@@ -52,16 +53,19 @@ export class HomeComponent implements OnInit {
     });
 
   }
-  oneone(user: string){
-    this.chat.one(user + ',' + this.currentUser.username).subscribe(value =>{
+  oneone(user: Object){
+    this.chat.one(user['userName'] + ',' + this.currentUser.username).subscribe(value =>{
       this.one = JSON.parse(localStorage.getItem(value.roomID));
       this.roomID = value.roomID;
     });
     this.broadcast = false;
+    this.oneonetag = user['userName'] + ',' + this.currentUser.username;
   }
   broadcasted(){
     this.broadcast = true;
-    this.one = {};
+    this.one = null;
+    this.roomID = JSON.parse(localStorage.getItem('currentUser')).chatid;
+    this.oneonetag = '';
   }
 
 }

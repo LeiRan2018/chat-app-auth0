@@ -1,16 +1,14 @@
 <app-header></app-header>
- <h4 class="text-center p-3">HELLO, {{currentUser.username }}</h4> 
-<!-- <h4 class="text-center p-3">HELLO, {{one | json}}</h4>
-<h4>{{broadcast}}</h4> --> 
-<p>{{currentUser | json}}</p>
+<h4 class="text-center p-3">HELLO, {{currentUser.username.toUpperCase() }}</h4>
+<!-- <h4 class="text-center p-3">{{one | json}}</h4> -->
+<!-- <p>{{currentUser | json}}</p> -->
 <div class="container">
     <div class="row">
         <div class="col-2">
             <ul class="list-group">
-                <button type="button" class="btn btn-primary" (click)="broadcasted()">broadcast</button>
+                <button type="button" [disabled]="broadcast" class="btn btn-primary" (click)="broadcasted()">broadcast</button>
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.contacts'>
-                    <b>{{info.userName}}</b>
-                    <button type="button" class="btn btn-primary" (click)="oneone(info.userName)">{{info.userName}}</button>
+                    <button type="button" class="btn btn-primary" (click)="oneone(info)">{{info.userName}}</button>
                 </li>
             </ul>
 
@@ -18,19 +16,14 @@
 
         <div class="col-10">
             <div *ngIf="broadcast">
+                <p>broadcast room</p>
                 <div [className]="i % 2 == 1 ? 'container-fluid list-group-item list-group-item-dark':'container-fluid list-group-item list-group-item-light'"
                     *ngFor='let info of currentUser.message; let i = index'>
-                    <div class="row">
-                        <div class="col-8"><b>{{info}}</b> </div>
-                        <div class="col-4 text-right">{{info.time}}</div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-11">{{info.meg}}</div>
-                    </div> -->
+                    <div class="col-11">{{info | json}}</div>
                 </div>
             </div>
             <div *ngIf="one">
+                <div>{{oneonetag.split(',')[0]}} and {{oneonetag.split(',')[1]}}</div>
                 <ul class="list-group">
                     <li class="list-group-item list-group-item-success py-4" *ngFor='let info of one.message'>
                         <b>{{info | json}}</b>

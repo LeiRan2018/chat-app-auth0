@@ -26,32 +26,19 @@ const message = sequelize.define('message',{
 
 exports.postlogin = async function (data) {
     try {
-        let user = User.findOne({ where: { userName: data.username } }).then(user => {
-
-            chatRoom.findOne().then(chatRoom => {
-                sequelize.sync()
-                    .then(() => user_chatRoom.create({
-                        user_chatRoomID: shortid.generate(),
-                        userID: user.userID,
-                        chatRoomID: chatRoom.chatRoomID
-                    }))
-            })
-            return user;
-        });
-        return user;
+        return User.findOne({ where: { userName: data.username } })
     }
     catch (e) {
-        throw Error('error occured while posting new data');
+        throw Error('error occured while getting user info');
     }
 };
 
 exports.postlogin2 = async function () {
     try {
-        let userchat = chatRoom.findOne();
-        return userchat;
+        return chatRoom.findOne();
     }
     catch (e) {
-        throw Error('error occured while catching userchat table');
+        throw Error('error occured while getting broadcast room');
     }
 };
 
@@ -69,7 +56,7 @@ exports.postlogin4 = async function (data) {
         return message.findAll({where: {chatRoomID: data}})
     }
     catch (e) {
-        throw Error('error occured while catching userchat table');
+        throw Error('error occured while getting all messages from broadcast room');
     }
 };
 
@@ -78,7 +65,7 @@ exports.postlogin5 = async function () {
         return user.findAll();
     }
     catch (e) {
-        throw Error('error occured while catching user list');
+        throw Error('error occured while getting user list');
     }
 }
 
@@ -98,6 +85,6 @@ exports.postlogout = async function (data) {
         })
 
     } catch (e) {
-
+        throw Error('error occured while logging out');
     }
 }
