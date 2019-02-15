@@ -3,6 +3,7 @@ import { ChatService } from '../chat.service';
 import { Chats } from '../models/chats.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,9 +22,12 @@ export class HomeComponent implements OnInit {
   broadcast: boolean = true;
   contact: Object;
   oneonetag: string;
+  data_li: Object;
+  profile: any;
   constructor(
 
     private chat: ChatService,
+    public auth: AuthService
   ) {
     this.chats = new Array<Chats>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -36,6 +40,7 @@ export class HomeComponent implements OnInit {
   }
     ngOnInit() {
     this.getChat();
+    this.getprofile();
   }
 
   sendMessage(meg: string) {
@@ -66,6 +71,22 @@ export class HomeComponent implements OnInit {
     this.one = null;
     this.roomID = JSON.parse(localStorage.getItem('currentUser')).chatid;
     this.oneonetag = '';
+  }
+  
+  li() {
+    this.chat.postusername(this.profile.nickname).subscribe(el =>{
+      this.data_li = el;
+    })
+  }
+
+  getprofile() {
+    if (this.auth.userProfile) {
+      this.profile = this.auth.userProfile;
+    } else {
+      this.auth.getProfile((err, profile) => {
+        this.profile = profile;
+      });
+    }
   }
 
 }

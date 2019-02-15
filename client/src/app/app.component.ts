@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chats } from './models/chats.model';
+import { AuthService } from './auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +9,14 @@ import { Chats } from './models/chats.model';
 })
 export class AppComponent implements OnInit {
   title = 'client';
-  message: string;
-  chats: Array<Chats>;
-  userid: string;
 
-  constructor() {
-    this.chats = new Array<Chats>();
-
+  constructor(public auth: AuthService) {
+    auth.handleAuthentication();
   }
 
   ngOnInit() {
-
-
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+      this.auth.renewTokens();
+    }
   }
-
-
-
 }

@@ -7,7 +7,8 @@ var methodOverride = require('method-override');
 var api = require('./routes/api.route');
 var bodyParser = require('body-parser');
 const Sequelize = require('sequelize');
-var shortid = require('shortid');
+const jwtAuthz = require('express-jwt-authz');
+require('dotenv').config();
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -21,6 +22,8 @@ const sequelize = new Sequelize('chat-app', 'root', 'example', {
     host: "127.0.0.1",
     port: 3306,
 });
+
+const checkScopes = jwtAuthz([ 'read:messages' ]);
 
 
 io.on('connection', function (socket) {

@@ -1,12 +1,19 @@
-<app-header></app-header>
+<h4 *ngIf="auth.isAuthenticated()">
+    You are logged in!
+    {{profile?.nickname}}
+</h4>
+<h4 *ngIf="!auth.isAuthenticated()">
+    You are not logged in!
+</h4>
 <h4 class="text-center p-3">HELLO, {{currentUser.username.toUpperCase() }}</h4>
-<!-- <h4 class="text-center p-3">{{one | json}}</h4> -->
+<h4 class="text-center p-3">{{one | json}}</h4>
 <!-- <p>{{currentUser | json}}</p> -->
-<div class="container">
+<div *ngIf="auth.isAuthenticated()" class="container">
     <div class="row">
         <div class="col-2">
             <ul class="list-group">
-                <button type="button" [disabled]="broadcast" class="btn btn-primary" (click)="broadcasted()">broadcast</button>
+                <button type="button" [disabled]="broadcast" class="btn btn-primary"
+                    (click)="broadcasted()">broadcast</button>
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.contacts'>
                     <button type="button" class="btn btn-primary" (click)="oneone(info)">{{info.userName}}</button>
                 </li>
@@ -45,14 +52,16 @@
             <div class="bg-light">
                 <div class="row ">
                     <div class="col " [formGroup]="chatForm"><br>
-                        <textarea rows="4" class="container-fluid " #newmsg (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''"
-                            formControlName="chat" required></textarea>
+                        <textarea rows="4" class="container-fluid " #newmsg
+                            (keyup.enter)="sendMessage(newmsg.value); newmsg.value = ''" formControlName="chat"
+                            required></textarea>
                     </div>
                 </div>
 
                 <div class="row ">
                     <div class="col text-right">
-                        <button type="button" [disabled]="!chatForm.valid" class="btn btn-primary" (click)="sendMessage(newmsg.value); newmsg.value='';">Send
+                        <button type="button" [disabled]="!chatForm.valid" class="btn btn-primary"
+                            (click)="sendMessage(newmsg.value); newmsg.value='';">Send
                             Message</button>
                     </div>
                 </div>

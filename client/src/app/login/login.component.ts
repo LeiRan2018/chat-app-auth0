@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ChatService } from '../chat.service';
 import { Router } from '@angular/router';
 import { Login } from '../models/login.model';
+import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,21 +20,10 @@ export class LoginComponent implements OnInit {
   constructor(
     private chat: ChatService,
     private router: Router,
+    public auth: AuthService
 
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
-    this.returnUrl = '/';
-    this.chat.logout();
-    this.model = new Login('');
   }
-
-  senduser() {
-    this.chat.postusername(this.model).subscribe( 
-      ()=> {this.router.navigate(['/']);},
-      error => this.error = error );
-  }
-
 }

@@ -26,7 +26,7 @@ const message = sequelize.define('message',{
 
 exports.postlogin = async function (data) {
     try {
-        return User.findOne({ where: { userName: data.username } })
+        return User.findOne({ where: { userName: data } })
     }
     catch (e) {
         throw Error('error occured while getting user info');

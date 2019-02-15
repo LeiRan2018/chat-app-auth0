@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule }   from '@angular/forms';
-import { HeaderComponent } from './header/header.component';
 import { SignComponent } from './sign/sign.component';
 
 
@@ -16,15 +15,18 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChatComponent } from './chat/chat.component';
+import { CallbackComponent } from './callback/callback.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent,
     SignComponent,
     HomeComponent,
     ChatComponent,
+    CallbackComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +35,6 @@ import { ChatComponent } from './chat/chat.component';
     FormsModule,
     NgbModule,
     ReactiveFormsModule
-  ],
-  entryComponents:[
-    LoginComponent
   ],
   providers: [
     ChatService,
