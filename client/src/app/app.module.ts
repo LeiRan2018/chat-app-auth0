@@ -7,14 +7,12 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { FormsModule }   from '@angular/forms';
-import { SignComponent } from './sign/sign.component';
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ChatComponent } from './chat/chat.component';
 import { CallbackComponent } from './callback/callback.component';
 import { ProfileComponent } from './profile/profile.component';
 
@@ -22,9 +20,7 @@ import { ProfileComponent } from './profile/profile.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    SignComponent,
     HomeComponent,
-    ChatComponent,
     CallbackComponent,
     ProfileComponent
   ],

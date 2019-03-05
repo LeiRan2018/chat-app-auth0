@@ -26,7 +26,7 @@ export class AuthService {
   constructor(
     public router: Router,
     private chat: ChatService
-    ) {
+  ) {
     this._idToken = '';
     this._accessToken = '';
     this._expiresAt = 0;
@@ -49,7 +49,19 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.localLogin(authResult);
         this.getProfile((err, profile) => {
-          this.chat.postusername(profile.nickname).subscribe();
+          // user logged with own account
+          this.chat.loginuser({ username: profile.nickname }).subscribe(
+            (res) => {
+              console.log(res)
+            },
+            // sign up first if never logged before
+            () => {
+              this.chat.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
+                this.chat.loginuser({ username: profile.nickname }).subscribe();
+              });
+
+            });
+
         });
         this.router.navigate(['/home']);
       } else if (err) {
@@ -82,17 +94,17 @@ export class AuthService {
     this._accessToken = authResult.accessToken;
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
-    
+
   }
 
   public renewTokens(): void {
     this.auth0.checkSession({}, (err, authResult) => {
-       if (authResult && authResult.accessToken && authResult.idToken) {
-         this.localLogin(authResult);
-       } else if (err) {
-         alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
-         this.logout();
-       }
+      if (authResult && authResult.accessToken && authResult.idToken) {
+        this.localLogin(authResult);
+      } else if (err) {
+        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+        this.logout();
+      }
     });
   }
 
