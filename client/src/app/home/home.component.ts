@@ -45,8 +45,10 @@ export class HomeComponent implements OnInit {
   }
 
   oneone(user: Object) {
+    
     this.selectinfo = user;
     this.broadcastupdate();
+    console.log(this.message);
     this.chat.one(user['userName'] + ',' + this.currentUser.username).subscribe(value => {
       this.one = JSON.parse(localStorage.getItem(value.roomID));
       this.roomID = value.roomID;
@@ -77,7 +79,10 @@ export class HomeComponent implements OnInit {
     this.currentUser.message.forEach(el => {
       historymess.push({ message: el.message, username: el.username });
     });
-    this.message = historymess.concat(this.messages);
+    this.messages.forEach(el =>{
+      historymess.push({message: el.mess, username: el.user});
+    })
+    this.message = historymess;
 
   }
 

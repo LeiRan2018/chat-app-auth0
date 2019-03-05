@@ -52,12 +52,14 @@ export class AuthService {
           // user logged with own account
           this.chat.loginuser({ username: profile.nickname }).subscribe(
             (res) => {
-              console.log(res)
+              this.chat.joinroom(res['chatid']);
             },
             // sign up first if never logged before
             () => {
               this.chat.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
-                this.chat.loginuser({ username: profile.nickname }).subscribe();
+                this.chat.loginuser({ username: profile.nickname }).subscribe((res)=>{
+                  this.chat.joinroom(res['chatid']);
+                });
               });
 
             });
