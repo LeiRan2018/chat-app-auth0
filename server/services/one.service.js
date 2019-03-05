@@ -1,24 +1,10 @@
-const Sequelize = require('sequelize');
+const chatRoom = require('../models/chatroom');
 
-const sequelize = new Sequelize('chat-app', 'root', 'example', {
-    dialect: 'mysql',
-    host: "127.0.0.1",
-    port: 3306,
-});
+const message = require('../models/message');
 
-const chatroom = sequelize.define('chatRoom', {
-    chatRoomID: Sequelize.STRING
-})
-
-const message = sequelize.define('message', {
-    messageID: Sequelize.STRING,
-    chatRoomID: Sequelize.STRING,
-    message: Sequelize.STRING
-})
-
-exports.postone = async function (data) {
+exports.createroom = async function (data) {
     try {
-        return chatroom.create({
+        return chatRoom.create({
             chatRoomID: data
         });
 
@@ -27,7 +13,7 @@ exports.postone = async function (data) {
     }
 };
 
-exports.postone2 = async function (data) {
+exports.gethistory = async function (data) {
     try {
         return message.findAll({ where: { chatRoomID: data } })
     }
@@ -38,7 +24,7 @@ exports.postone2 = async function (data) {
 
 exports.exit = async function (chatRoomID) {
     try {
-        return chatroom.findOne({ where: { chatRoomID: chatRoomID } });
+        return chatRoom.findOne({ where: { chatRoomID: chatRoomID } });
     }
     catch (e) {
         throw Error('error occured while catching userchat table');

@@ -1,39 +1,21 @@
-var user = require('../models/user.model');
-const Sequelize = require('sequelize');
-var shortid = require('shortid');
+const chatRoom = require('../models/chatroom');
 
-const sequelize = new Sequelize('chat-app', 'root', 'example', {
-    dialect: 'mysql',
-    host: "127.0.0.1",
-    port: 3306,
-});
+const user_chatRoom = require('../models/user-chat');
 
-const chatRoom = sequelize.define('chatRoom', {
-    chatRoomID: Sequelize.STRING
-})
-const user_chatRoom = sequelize.define('user_chatRoom', {
-    user_chatRoomID: Sequelize.STRING,
-    userID: Sequelize.STRING,
-    chatRoomID: Sequelize.STRING,
-})
-const User = user;
+const user = require('../models/user');
 
-const message = sequelize.define('message',{
-    messageID: Sequelize.STRING,
-    chatRoomID: Sequelize.STRING,
-    message: Sequelize.STRING
-})
+const message = require('../models/message');
 
-exports.postlogin = async function (data) {
+exports.getuser = async function (data) {
     try {
-        return User.findOne({ where: { userName: data } })
+        return user.findOne({ where: { userName: data.username } })
     }
     catch (e) {
         throw Error('error occured while getting user info');
     }
 };
 
-exports.postlogin2 = async function () {
+exports.getchatroom = async function () {
     try {
         return chatRoom.findOne();
     }
@@ -42,25 +24,16 @@ exports.postlogin2 = async function () {
     }
 };
 
-exports.postlogin3 = async function (data) {
+exports.gethistory = async function (data) {
     try {
-        return user_chatRoom.findAll({where: {userID: data}})
-    }
-    catch (e) {
-        throw Error('error occured while catching userchat table');
-    }
-};
-
-exports.postlogin4 = async function (data) {
-    try {
-        return message.findAll({where: {chatRoomID: data}})
+        return message.findAll({ where: { chatRoomID: data } })
     }
     catch (e) {
         throw Error('error occured while getting all messages from broadcast room');
     }
 };
 
-exports.postlogin5 = async function () {
+exports.getcontact = async function () {
     try {
         return user.findAll();
     }
@@ -71,7 +44,6 @@ exports.postlogin5 = async function () {
 
 exports.postlogout = async function (data) {
     try {
-        // console.log(data + 'wefewfweijfwef');
         user_chatRoom.findOne(
             {
                 where: { userID: data.userid },

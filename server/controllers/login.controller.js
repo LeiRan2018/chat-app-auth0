@@ -3,10 +3,15 @@ var loginService = require('../services/login.service');
 exports.postlogin = async function (req, res) {
     try {
         var data = req.body.data;
-        var user = await loginService.postlogin(data);
-        var chatroom = await loginService.postlogin2();
-        var message = await loginService.postlogin4(chatroom.chatRoomID);
-        var contacts = await loginService.postlogin5();
+        //get user information from user table
+        var user = await loginService.getuser(data);
+        //get broadroom ID from user-chat table
+        var chatroom = await loginService.getchatroom();
+        //get the broadroom chat history from message table
+        var message = await loginService.gethistory(chatroom.chatRoomID);
+        //get contacts from user table
+        var contact = await loginService.getcontact();
+        //filter message that only shown after user signing up
         var sortedmes = message.filter(element => {
             if (+user.createdAt <= +element.createdAt) {
                 return element;
@@ -20,7 +25,7 @@ exports.postlogin = async function (req, res) {
                     userid: user.userID,
                     chatid: chatroom.chatRoomID,
                     message: sortedmes,
-                    contacts: contacts
+                    contacts: contact
                 }, message: "successfully"
             });
     } catch (e) {
@@ -31,7 +36,8 @@ exports.postlogin = async function (req, res) {
 exports.postlogout = async function (req, res) {
     try {
         var data = req.body.data;
-        var query = await loginService.postlogout(data);
+        //records the log out time for this user in user-chat table
+        await loginService.postlogout(data);
         return res
             .status(200)
             .json({ status: 200, message: 'successfully' });

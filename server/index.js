@@ -6,9 +6,7 @@ var cors = require('cors');
 var methodOverride = require('method-override');
 var api = require('./routes/api.route');
 var bodyParser = require('body-parser');
-const Sequelize = require('sequelize');
-const jwtAuthz = require('express-jwt-authz');
-require('dotenv').config();
+var shortid = require('shortid');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -17,24 +15,55 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(cors());
 app.use('/api', api);
 
-const sequelize = new Sequelize('chat-app', 'root', 'example', {
-    dialect: 'mysql',
-    host: "127.0.0.1",
-    port: 3306,
-});
+const user = require('./models/user');
 
-const checkScopes = jwtAuthz([ 'read:messages' ]);
+const user_chatRoom = require('./models/user-chat');
 
+const chatRoom = require('./models/chatroom');
 
+const message = require('./models/message');
+
+user.sync();
+user_chatRoom.sync();
+message.sync();
+
+//create a broadcast room if there is no room in chatRoom
+chatRoom.sync()
+    .then(() => chatRoom.findOne().then(value => {
+        if (value) {
+            console.log("roomID: " + value.chatRoomID)
+        }
+        else {
+            chatRoom.create({
+                chatRoomID: shortid.generate()
+            })
+        }
+    }))
+// socket io to detect message sent from frontend and send back to frontend
 io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         console.log('disconnected');
     });
 
-    socket.on('message', (msg) => {
-        console.log('message: ' + msg['meg'] + " userid: " + msg['userid']);
-        io.emit('message', msg);
+    socket.on('add-message', (data) => {
+        console.log(Object.keys(socket.rooms))
+        console.log(data)
+        //send message to user in this room
+        io.to(data.room).emit('message', data);
+    });
+    //determine user room id 
+    socket.on('room', (data) => {
+        let rooms = Object.keys(socket.rooms);
+        console.log(socket.rooms);
+        if (rooms.length === 2 && rooms[1] != data) {
+            console.log(rooms[0] + ' change room to ' + data);
+            socket.leave(rooms[1]);
+            socket.join(data);
+        } else {
+            console.log(rooms[0] + ' join room in ' + data);
+            socket.join(data)
+        };
     })
 });
 
