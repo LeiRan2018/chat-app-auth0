@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/mergeMap'
+import { of, timer } from 'rxjs';
 import * as auth0 from 'auth0-js';
 import { ChatService } from '../chat.service';
 
@@ -22,6 +25,7 @@ export class AuthService {
   });
 
   userProfile: any;
+  refreshSubscription: any;
 
   constructor(
     public router: Router,
@@ -53,19 +57,21 @@ export class AuthService {
           this.chat.loginuser({ username: profile.nickname }).subscribe(
             (res) => {
               this.chat.joinroom(res['chatid']);
+              this.router.navigate(['/']);
             },
             // sign up first if never logged before
             () => {
               this.chat.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
                 this.chat.loginuser({ username: profile.nickname }).subscribe((res)=>{
                   this.chat.joinroom(res['chatid']);
+                  this.router.navigate(['/']);
                 });
               });
 
             });
 
         });
-        this.router.navigate(['/home']);
+        // this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);
         console.log(err);
@@ -97,6 +103,7 @@ export class AuthService {
     this._idToken = authResult.idToken;
     this._expiresAt = expiresAt;
 
+    this.scheduleRenewal();
   }
 
   public renewTokens(): void {
@@ -117,13 +124,45 @@ export class AuthService {
     this._expiresAt = 0;
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('currentUser');
+    this.unscheduleRenewal();
     // Go back to the home route
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
     return new Date().getTime() < this._expiresAt;
+  }
+
+  public scheduleRenewal() {
+    if(!this.isAuthenticated()) return;
+    this.unscheduleRenewal();
+
+    const expiresAt = this._expiresAt;
+
+    const source = of(expiresAt).flatMap(
+      expiresAt => {
+
+        const now = Date.now();
+
+        // Use the delay in a timer to
+        // run the refresh at the proper time
+        return timer(Math.max(1, expiresAt - now));
+      });
+
+    // Once the delay time from above is
+    // reached, get a new JWT and schedule
+    // additional refreshes
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewTokens();
+      this.scheduleRenewal();
+    });
+  }
+
+  public unscheduleRenewal() {
+    if(!this.refreshSubscription) return;
+    this.refreshSubscription.unsubscribe();
   }
 }

@@ -7,7 +7,7 @@
 </h4>
 <!-- <p>{{currentUser | json}}</p> -->
 <div *ngIf="auth.isAuthenticated()" class="container">
-    <h4 class="text-center p-3">HELLO, {{currentUser.username.toUpperCase() }}</h4>
+    <h4 class="text-center p-3">HELLO, {{profile?.nickname}}</h4>
     <div class="row">
         <div class="col-2">
             <ul class="list-group">

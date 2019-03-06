@@ -41,7 +41,7 @@ export class ChatService {
       })
     );
   }
-  
+
   //switch to one-one chat mode with these two user name as parameter
   one(name: string) {
     return this.http.post(`${this.url}/api/one`, { data: name }).pipe(
@@ -53,13 +53,8 @@ export class ChatService {
   }
   //logout user and clean localstorage 
   logout() {
-    // console.log(JSON.parse(localStorage.getItem('currentUser')));
-    return this.http.post(`${this.url}/api/login/out`, { 'data': JSON.parse(localStorage.getItem('currentUser')) }).pipe(
-      map(res => {
-        console.log('success');
-        return res['data']
-      })
-    );
+    localStorage.removeItem('currentUser');
+    
   }
   //send real message to backend with socket.io
   sendMessage(message) {
@@ -73,7 +68,7 @@ export class ChatService {
   //receive real-time message with socket.io
   getMessages() {
     let observable = new Observable(observer => {
-      
+
       this.socket.on('message', (data) => {
         observer.next(data);
       });
