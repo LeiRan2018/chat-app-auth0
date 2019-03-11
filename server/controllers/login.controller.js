@@ -12,11 +12,7 @@ exports.postlogin = async function (req, res) {
         //get contacts from user table
         var contact = await loginService.getcontact();
         //filter message that only shown after user signing up
-        var sortedmes = message.filter(element => {
-            if (+user.createdAt <= +element.createdAt) {
-                return element;
-            }
-        });
+        
         return res
             .status(200)
             .json({
@@ -24,7 +20,7 @@ exports.postlogin = async function (req, res) {
                     username: user.userName,
                     userid: user.userID,
                     chatid: chatroom.chatRoomID,
-                    message: sortedmes,
+                    message: message,
                     contacts: contact
                 }, message: "successfully"
             });

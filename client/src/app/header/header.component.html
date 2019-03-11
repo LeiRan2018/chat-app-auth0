@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-  <a href="/" class="navbar-brand">Home</a>
+  <a routerLink="/home" class="navbar-brand">Home</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar7">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -10,8 +10,8 @@
           Profile
         </button>
         <!-- <button type="button" class="btn btn-primary" (click)="logout()">Log out</button> -->
-        <button id="qsLoginBtn" class="btn btn-primary my-2 my-sm-0" *ngIf="!auth.isAuthenticated()" (click)="auth.login()"
-          type="button">
+        <button id="qsLoginBtn" class="btn btn-primary my-2 my-sm-0" *ngIf="!auth.isAuthenticated()"
+          (click)="auth.login()" type="button">
           Log In
         </button>
         <button id="qsLogoutBtn" class="btn btn-primary my-2 my-sm-0" *ngIf="auth.isAuthenticated()"
