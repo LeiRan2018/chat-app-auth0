@@ -11,7 +11,6 @@ exports.postlogin = async function (req, res) {
         var message = await loginService.gethistory(chatroom.chatRoomID);
         //get contacts from user table
         var contact = await loginService.getcontact();
-        //filter message that only shown after user signing up
         
         return res
             .status(200)
