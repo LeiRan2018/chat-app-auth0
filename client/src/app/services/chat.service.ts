@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Sign } from './models/sign.model';
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 
@@ -20,26 +19,10 @@ export class ChatService {
     this.socket = io(this.url);
   }
 
-  //sign up user and send to backend
-  signuser(user: Sign) {
-    return this.http.post(`${this.url}/api/sign`, { 'data': user }).pipe(
-      map(res => { return res['data'] })
-    );
-  }
+
   //send user message to backend and save to mysql
   postchat(msg: any) {
     return this.http.post(`${this.url}/api/chat/postchat`, { 'data': msg });
-  }
-
-  //login use with user name and get user info and chat history from broadcast room by default
-  loginuser(username: any) {
-    return this.http.post(`${this.url}/api/login`, { 'data': username }).pipe(
-      map(res => {
-        //save logged in user in localstorage
-        localStorage.setItem('currentUser', JSON.stringify(res['data']));
-        return res['data']
-      })
-    );
   }
 
   //switch to one-one chat mode with these two user name as parameter
@@ -51,20 +34,13 @@ export class ChatService {
       })
     );
   }
-  //logout user and clean localstorage 
-  logout() {
-    localStorage.removeItem('currentUser');
-    
-  }
+
   //send real message to backend with socket.io
   sendMessage(message) {
 
     this.socket.emit('add-message', message);
   }
-  //join chat room with room id
-  joinroom(room) {
-    this.socket.emit('room', room);
-  }
+
   //receive real-time message with socket.io
   getMessages() {
     let observable = new Observable(observer => {

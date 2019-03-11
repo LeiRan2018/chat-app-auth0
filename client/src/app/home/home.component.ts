@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ChatService } from '../chat.service';
+import { ChatService } from '../services/chat.service';
 import { Chats } from '../models/chats.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
+import { LoginService } from '../services/login.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -30,7 +31,8 @@ export class HomeComponent implements OnInit {
   constructor(
 
     private chat: ChatService,
-    public auth: AuthService
+    public auth: AuthService,
+    private _login: LoginService
   ) {
     this.messages = new Array<any>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -53,7 +55,7 @@ export class HomeComponent implements OnInit {
       this.one = JSON.parse(localStorage.getItem(value.roomID));
       this.roomID = value.roomID;
       console.log(this.roomID);
-      this.chat.joinroom(this.roomID);
+      this._login.joinroom(this.roomID);
     });
     this.broadcast = false;
     this.oneonetag = user['userName'] + ',' + this.currentUser.username;
@@ -70,7 +72,7 @@ export class HomeComponent implements OnInit {
     this.broadcastbutton = true;
     this.one = null;
     this.roomID = JSON.parse(localStorage.getItem('currentUser')).chatid;
-    this.chat.joinroom(this.roomID);
+    this._login.joinroom(this.roomID);
     this.oneonetag = '';
     this.messages = new Array<any>();
   }

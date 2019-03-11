@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ChatService } from './chat.service';
+import { ChatService } from './services/chat.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';

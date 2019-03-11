@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/mergeMap'
 import { of, timer } from 'rxjs';
 import * as auth0 from 'auth0-js';
-import { ChatService } from '../chat.service';
+import { LoginService } from '../services/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +28,7 @@ export class AuthService {
 
   constructor(
     public router: Router,
-    private chat: ChatService
+    private _login: LoginService
   ) {
     this._idToken = '';
     this._accessToken = '';
@@ -54,16 +53,16 @@ export class AuthService {
         this.localLogin(authResult);
         this.getProfile((err, profile) => {
           // user logged with own account
-          this.chat.loginuser({ username: profile.nickname }).subscribe(
+          this._login.loginuser({ username: profile.nickname }).subscribe(
             (res) => {
-              this.chat.joinroom(res['chatid']);
+              this._login.joinroom(res['chatid']);
               this.router.navigate(['/']);
             },
             // sign up first if never logged before
             () => {
-              this.chat.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
-                this.chat.loginuser({ username: profile.nickname }).subscribe((res)=>{
-                  this.chat.joinroom(res['chatid']);
+              this._login.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
+                this._login.loginuser({ username: profile.nickname }).subscribe((res)=>{
+                  this._login.joinroom(res['chatid']);
                   this.router.navigate(['/']);
                 });
               });
@@ -124,7 +123,7 @@ export class AuthService {
     this._expiresAt = 0;
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('currentUser');
+    this._login.logout();
     this.unscheduleRenewal();
     // Go back to the home route
     this.router.navigate(['/home']);

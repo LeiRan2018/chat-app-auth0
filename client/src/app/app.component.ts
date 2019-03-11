@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chats } from './models/chats.model';
 import { AuthService } from './auth/auth.service';
-import { ChatService } from './chat.service';
+import { ChatService } from './services/chat.service';
 
 @Component({
   selector: 'app-root',
