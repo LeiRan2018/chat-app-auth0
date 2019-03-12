@@ -20,6 +20,7 @@ export class LoginService {
       map(res => {
         //save logged in user in localstorage
         localStorage.setItem('currentUser', JSON.stringify(res['data']));
+        localStorage.setItem(res['data'].chatid, JSON.stringify(res['data']));
         return res['data']
       })
     );
@@ -30,11 +31,6 @@ export class LoginService {
     return this.http.post(`${this.url}/api/sign`, { 'data': user }).pipe(
       map(res => { return res['data'] })
     );
-  };
-
-  //join chat room with room id
-  joinroom(room) {
-    this.socket.emit('room', room);
   };
 
   //logout user and clean localstorage 

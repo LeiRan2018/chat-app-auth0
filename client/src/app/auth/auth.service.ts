@@ -6,6 +6,7 @@ import 'rxjs/add/operator/mergeMap'
 import { of, timer } from 'rxjs';
 import * as auth0 from 'auth0-js';
 import { LoginService } from '../services/login.service';
+import { ChatService } from '../services/chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,8 @@ export class AuthService {
 
   constructor(
     public router: Router,
-    private _login: LoginService
+    private _login: LoginService,
+    private _chat: ChatService
   ) {
     this._idToken = '';
     this._accessToken = '';
@@ -55,15 +57,15 @@ export class AuthService {
           // user logged with own account
           this._login.loginuser({ username: profile.nickname }).subscribe(
             (res) => {
-              this._login.joinroom(res['chatid']);
-              this.router.navigate(['/']);
+              this._chat.joinroom(res['chatid']);
+              this.router.navigate(['/home']);
             },
             // sign up first if never logged before
             () => {
               this._login.signuser({ username: profile.nickname, address: profile.sub }).subscribe(() => {
                 this._login.loginuser({ username: profile.nickname }).subscribe((res)=>{
-                  this._login.joinroom(res['chatid']);
-                  this.router.navigate(['/']);
+                  this._chat.joinroom(res['chatid']);
+                  this.router.navigate(['/home']);
                 });
               });
 

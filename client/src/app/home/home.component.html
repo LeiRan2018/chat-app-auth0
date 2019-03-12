@@ -12,29 +12,19 @@
         <div class="col-2">
             <ul class="list-group">
                 <button type="button" [disabled]="broadcastbutton" class="btn btn-primary"
-                    (click)="broadcasted()">broadcast</button>
+                    (click)="changeRoom(currentUser); broadcastbutton = true">broadcast</button>
 
                 <li class="list-group-item list-group-item-success py-4" *ngFor='let info of currentUser.contacts'>
                     <button type="button" [disabled]="info === selectinfo" class="btn btn-primary"
-                        (click)="oneone(info)">{{info.userName}}</button>
+                        (click)="changeRoom(info)">{{info.userName}}</button>
                 </li>
             </ul>
 
         </div>
 
         <div class="col-10">
-            <div *ngIf="broadcast">
-                <h5>broadcast room</h5>
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success"
-                        *ngFor='let mess of message'>
-                        {{mess.message}}
-                        <span class="badge badge-info badge-pill ">{{mess.username}}</span>
-                    </li>
-                </ul>
-            </div>
             <div *ngIf="login">
-                <h5>broadcast room</h5>
+                <!-- <h5>broadcast room</h5> -->
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success"
                         *ngFor='let info of currentUser.message'>
@@ -44,7 +34,7 @@
                 </ul>
             </div>
             <div *ngIf="one">
-                <h5>{{oneonetag.split(',')[0]}} and {{oneonetag.split(',')[1]}}</h5>
+                <h5>{{roomTag}}</h5>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success"
                         *ngFor='let info of one.message'>

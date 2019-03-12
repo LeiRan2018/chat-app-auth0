@@ -17,20 +17,20 @@ export class HomeComponent implements OnInit {
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
-  roomID: string;
   broadcast: boolean = false;
   login: boolean = true;
   broadcastbutton: boolean = true;
   contact: Object;
-  oneonetag: string;
+  roomTag: string;
   selectinfo: Object;
   messages: Array<any>;
   message: Array<any>;
   data_li: Object;
   profile: any;
+  roomId: string;
   constructor(
 
-    private chat: ChatService,
+    private _chat: ChatService,
     public auth: AuthService,
     private _login: LoginService
   ) {
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.contact = this.currentUser.contacts.find(el => el.userName === this.currentUser.username);
     this.currentUser.contacts.splice(this.currentUser.contacts.indexOf(this.contact), 1);
-    this.roomID = JSON.parse(localStorage.getItem('currentUser')) ? JSON.parse(localStorage.getItem('currentUser')).chatid : '';
+    this.roomId = JSON.parse(localStorage.getItem('currentUser')) ? JSON.parse(localStorage.getItem('currentUser')).chatid : '';
 
   }
   ngOnInit() {
@@ -46,69 +46,22 @@ export class HomeComponent implements OnInit {
     this.getprofile();
   }
 
-  oneone(user: Object) {
-    
-    this.selectinfo = user;
-    this.broadcastupdate();
-    console.log(this.message);
-    this.chat.one(user['userName'] + ',' + this.currentUser.username).subscribe(value => {
-      this.one = JSON.parse(localStorage.getItem(value.roomID));
-      this.roomID = value.roomID;
-      console.log(this.roomID);
-      this._login.joinroom(this.roomID);
-    });
-    this.broadcast = false;
-    this.oneonetag = user['userName'] + ',' + this.currentUser.username;
-    this.messages = new Array<any>();
-    this.login = false;
-    this.broadcastbutton = false;
-
-
-  }
-  broadcasted() {
-    this.selectinfo = null;
-    this.broadcast = true;
-    this.login = false;
-    this.broadcastbutton = true;
-    this.one = null;
-    this.roomID = JSON.parse(localStorage.getItem('currentUser')).chatid;
-    this._login.joinroom(this.roomID);
-    this.oneonetag = '';
-    this.messages = new Array<any>();
-  }
-  broadcastupdate() {
-    let historymess = [];
-    this.currentUser.message.forEach(el => {
-      historymess.push({ message: el.message, username: el.username });
-    });
-    this.messages.forEach(el =>{
-      historymess.push({message: el.mess, username: el.user});
-    })
-    this.message = historymess;
-
-  }
-
   send(mess: string) {
-    this.chat.sendMessage({ room: this.roomID, mess: mess, user: this.currentUser.username });
-    this.chat.postchat({ msg: mess, username: this.currentUser.username, chatid: this.roomID }).subscribe();
+    // console.log({ room: this.roomID, mess: mess, user: this.currentUser.username })
+    this._chat.sendMessage({ room: this.roomId, mess: mess, user: this.currentUser.username });
+    // this.chat.postchat({ msg: mess, username: this.currentUser.username, chatid: this.roomID }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
   }
 
   receive() {
-    this.chat.getMessages().subscribe(msg => {
+    this._chat.getMessages().subscribe(msg => {
       console.log(msg)
       this.messages.push(msg);
       console.log(this.messages);
     })
   }
-
-  // li() {
-  //   this.chat.postusername(this.profile.nickname).subscribe(el => {
-  //     this.data_li = el;
-  //   })
-  // }
 
   getprofile() {
     if (this.auth.userProfile) {
@@ -118,6 +71,30 @@ export class HomeComponent implements OnInit {
         this.profile = profile;
       });
     }
+  }
+
+  // switch room bettwen one-one room or broadcast room
+  changeRoom(user: any) {
+    if (user['userName']) {
+      this.roomId = user['userName'] + ',' + this.currentUser.username;
+      this.roomTag = this.roomId;
+    } else {
+      this.roomId = this.currentUser.chatid;
+      this.roomTag = 'Broadcast Room '
+    }
+    console.log(this.roomId);
+    this.selectinfo = user;
+    this._chat.changeRoom(this.roomId).subscribe(value => {
+      this.one = JSON.parse(localStorage.getItem(value.roomID));
+      this.roomId = value.roomID;
+      console.log(this.roomId);
+      this._chat.joinroom(this.roomId);
+    });
+    this.messages = new Array<any>();
+    this.login = false;
+    this.broadcastbutton = false;
+
+
   }
 
 }

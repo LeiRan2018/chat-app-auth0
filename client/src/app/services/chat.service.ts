@@ -26,8 +26,8 @@ export class ChatService {
   }
 
   //switch to one-one chat mode with these two user name as parameter
-  one(name: string) {
-    return this.http.post(`${this.url}/api/one`, { data: name }).pipe(
+  changeRoom(room: string) {
+    return this.http.post(`${this.url}/api/room`, { data: room }).pipe(
       map(res => {
         localStorage.setItem(res['data'].roomID, JSON.stringify(res['data']));
         return res['data']
@@ -41,12 +41,18 @@ export class ChatService {
     this.socket.emit('add-message', message);
   }
 
+  //join chat room with room id
+  joinroom(room) {
+    this.socket.emit('room', room);
+  };
+
   //receive real-time message with socket.io
   getMessages() {
     let observable = new Observable(observer => {
 
       this.socket.on('message', (data) => {
         observer.next(data);
+        console.log(data)
       });
       return () => {
         this.socket.disconnect();
