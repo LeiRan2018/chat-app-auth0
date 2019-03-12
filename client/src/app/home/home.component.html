@@ -33,11 +33,11 @@
                     </li>
                 </ul>
             </div>
-            <div *ngIf="one">
+            <div *ngIf="chatRoom">
                 <h5>{{roomTag}}</h5>
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center list-group-item-success"
-                        *ngFor='let info of one.message'>
+                        *ngFor='let info of chatRoom.message'>
                         {{info.message}}
                         <span class="badge badge-info badge-pill "> {{info.username}}</span>
                     </li>

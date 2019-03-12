@@ -4,7 +4,6 @@ import { Chats } from '../models/chats.model';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { AuthService } from '../auth/auth.service';
-import { LoginService } from '../services/login.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -12,12 +11,11 @@ import { LoginService } from '../services/login.service';
 })
 export class HomeComponent implements OnInit {
   currentUser: any;
-  one: Object;
+  chatRoom: Object;
   chats: Array<Chats>;
   chatForm = new FormGroup({
     chat: new FormControl('', Validators.required),
   });
-  broadcast: boolean = false;
   login: boolean = true;
   broadcastbutton: boolean = true;
   contact: Object;
@@ -25,14 +23,12 @@ export class HomeComponent implements OnInit {
   selectinfo: Object;
   messages: Array<any>;
   message: Array<any>;
-  data_li: Object;
   profile: any;
   roomId: string;
   constructor(
 
     private _chat: ChatService,
-    public auth: AuthService,
-    private _login: LoginService
+    public auth: AuthService
   ) {
     this.messages = new Array<any>();
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -49,7 +45,7 @@ export class HomeComponent implements OnInit {
   send(mess: string) {
     // console.log({ room: this.roomID, mess: mess, user: this.currentUser.username })
     this._chat.sendMessage({ room: this.roomId, mess: mess, user: this.currentUser.username });
-    // this.chat.postchat({ msg: mess, username: this.currentUser.username, chatid: this.roomID }).subscribe();
+    this._chat.postchat({ msg: mess, username: this.currentUser.username, chatid: this.roomId }).subscribe();
     if (this.chatForm.valid) {
       this.chatForm.reset();
     }
@@ -85,7 +81,7 @@ export class HomeComponent implements OnInit {
     console.log(this.roomId);
     this.selectinfo = user;
     this._chat.changeRoom(this.roomId).subscribe(value => {
-      this.one = JSON.parse(localStorage.getItem(value.roomID));
+      this.chatRoom = JSON.parse(localStorage.getItem(value.roomID));
       this.roomId = value.roomID;
       console.log(this.roomId);
       this._chat.joinroom(this.roomId);
